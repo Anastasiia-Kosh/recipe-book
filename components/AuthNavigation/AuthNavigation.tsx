@@ -16,15 +16,24 @@ const AuthNavigation = () => {
   return isAuthenticated ? (
     <>
       <li className={css.navigationItem}>
+  <Link
+    href="/recipes/create"
+    prefetch={false}
+    className={css.navigationLink}
+  >
+    Додати рецепт
+  </Link>
+</li>
+      <li className={css.navigationItem}>
         <Link href="/profile" prefetch={false} className={css.navigationLink}>
-          Profile
+          Профіль
         </Link>
       </li>
 
       <li className={css.navigationItem}>
         <p className={css.userEmail}>{user?.email}</p>
         <button className={css.logoutButton} onClick={handleLogout}>
-          Logout
+          Вийти
         </button>
       </li>
     </>
@@ -32,13 +41,13 @@ const AuthNavigation = () => {
     <>
       <li className={css.navigationItem}>
         <Link href="/sign-in" prefetch={false} className={css.navigationLink}>
-          Login
+          Увійти
         </Link>
       </li>
 
       <li className={css.navigationItem}>
         <Link href="/sign-up" prefetch={false} className={css.navigationLink}>
-          Sign up
+          Реєстрація
         </Link>
       </li>
     </>

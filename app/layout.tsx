@@ -14,21 +14,21 @@ const robotoFont = Roboto({
 })
 
 export const metadata: Metadata = {
-  title: "Note Hub",
-  description: "Note-taking app",
-   openGraph: {
-      title: "Note Hub",
-     description: "Note-taking app",
-      url: `https://notehub.com/notes`,
-      images: [
-        {
-          url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg?_gl=1*1ysfcv6*_gcl_au*ODUyOTQ5MTQ0LjE3NzcxOTI2ODU.*_ga*MTcyMDgxMzYzMC4xNzYyNzk3NTM2*_ga_PW0T7S5LDQ*czE3ODA4MTg2NzEkbzEyOSRnMSR0MTc4MDgyMDU2MCRqNTYkbDAkaDA.',
-          width: 1200,
-          height: 630,
-          alt: "Note Hub",
-        },
-      ],
-    },
+  title: "RecipeBook",
+  description: "Моя книга рецептів",
+  //  openGraph: {
+  //     title: "Note Hub",
+  //    description: "Note-taking app",
+  //     url: `https://notehub.com/notes`,
+  //     images: [
+  //       {
+  //         url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg?_gl=1*1ysfcv6*_gcl_au*ODUyOTQ5MTQ0LjE3NzcxOTI2ODU.*_ga*MTcyMDgxMzYzMC4xNzYyNzk3NTM2*_ga_PW0T7S5LDQ*czE3ODA4MTg2NzEkbzEyOSRnMSR0MTc4MDgyMDU2MCRqNTYkbDAkaDA.',
+  //         width: 1200,
+  //         height: 630,
+  //         alt: "Note Hub",
+  //       },
+  //     ],
+  //   },
 };
 
 export default function RootLayout({
@@ -39,7 +39,7 @@ export default function RootLayout({
   modal: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${robotoFont.variable}`}>
+    <html lang="uk" className={`${robotoFont.variable}`}>
       <TanStackProvider>
         <AuthProvider>
         <body>
