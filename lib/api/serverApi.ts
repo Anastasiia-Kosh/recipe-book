@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import type { Note } from "../../types/note";
 import { nextServerInstance } from "./api";
 import { User } from "@/types/user";
+import { Recipe } from "@/types/recipe";
 
 interface FetchNotesResponse {
   notes: Note[];
@@ -51,4 +52,48 @@ export const getMe = async () => {
     headers: { Cookie: cookiesData.toString() },
   });
   return data;
+};
+
+export interface FetchRecipesResponse {
+    recipes: Recipe[];
+  page: number;
+  perPage: number;
+  totalRecipes: number;
+  totalPages: number;
+}
+
+export const fetchRecipes = async (): Promise<FetchRecipesResponse> => {
+  const response = await fetch(
+    `${process.env.BACKEND_URL}/recipes`,
+    {
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch recipes");
+  }
+
+  return response.json();
+};
+
+export const fetchRecipeById = async (
+  id: string,
+): Promise<Recipe | null> => {
+  const response = await fetch(
+    `${process.env.BACKEND_URL}/recipes/${id}`,
+    {
+      cache: "no-store",
+    },
+  );
+
+  if (response.status === 404) {
+    return null;
+  }
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch recipe");
+  }
+
+  return response.json();
 };

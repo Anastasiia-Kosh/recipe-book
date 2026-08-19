@@ -1,6 +1,7 @@
 import { User } from "@/types/user";
 import type { Note } from "../../types/note";
 import { nextServerInstance } from "./api";
+import type { Recipe } from "@/types/recipe";
 
 interface FetchNotesResponse {
   notes: Note[];
@@ -54,6 +55,10 @@ export const login = async (loginData: LoginRequest) => {
   );
   return data;
 };
+export const logout = async () => {
+  const { data } = await nextServerInstance.post<ServerSession>(`/auth/logout`);
+  return data;
+};
 
 export interface RegisterRequest {
   email: string;
@@ -80,10 +85,6 @@ export const getMe = async () => {
   return data;
 };
 
-export const logout = async () => {
-  const { data } = await nextServerInstance.post<ServerSession>(`/auth/logout`);
-  return data;
-};
 export interface EditRequest {
   username: string;
 }
@@ -91,3 +92,24 @@ export const updateMe = async (editRequest: EditRequest) => {
   const { data } = await nextServerInstance.patch<User>(`/users/me`, editRequest);
   return data;
 };
+export const updateAvatar = async (
+  formData: FormData,
+): Promise<{ url: string }> => {
+  const { data } = await nextServerInstance.patch<{ url: string }>(
+    "/users/me/avatar",
+    formData,
+  );
+
+  return data;
+};
+
+export const createRecipe = async (
+  formData: FormData,
+): Promise<Recipe> => {
+  const { data } = await nextServerInstance.post<Recipe>(
+    "/recipes",
+    formData,
+  );
+
+  return data;
+}

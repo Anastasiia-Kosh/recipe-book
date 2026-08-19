@@ -16,7 +16,7 @@ export async function GET() {
     }
 
     if (refreshToken) {
-      const apiRes = await api.get("auth/session", {
+      const apiRes = await api.get("auth/refresh", {
         headers: {
           Cookie: cookieStore.toString(),
         },
@@ -26,6 +26,7 @@ export async function GET() {
 
       if (setCookie) {
         const cookieArray = Array.isArray(setCookie) ? setCookie : [setCookie];
+        const isProduction = process.env.NODE_ENV === "production";
         for (const cookieStr of cookieArray) {
           const parsed = parse(cookieStr);
 
@@ -33,12 +34,19 @@ export async function GET() {
             expires: parsed.Expires ? new Date(parsed.Expires) : undefined,
             path: parsed.Path,
             maxAge: Number(parsed["Max-Age"]),
+            httpOnly: true,
+           secure: isProduction,
+  sameSite: isProduction
+    ? ("none" as const)
+    : ("lax" as const),
           };
 
           if (parsed.accessToken)
             cookieStore.set("accessToken", parsed.accessToken, options);
           if (parsed.refreshToken)
             cookieStore.set("refreshToken", parsed.refreshToken, options);
+          if (parsed.sessionId)
+            cookieStore.set("sessionId", parsed.sessionId, options);
         }
         return NextResponse.json({ success: true }, { status: 200 });
       }

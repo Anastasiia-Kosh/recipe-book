@@ -1,17 +1,22 @@
+"use client";
+
 import { recipeCategories } from "@/types/recipe";
+import { createRecipe } from "@/lib/api/clientApi";
+import { useRouter } from "next/navigation";
 
 export default function RecipeForm() {
-  async function handleSubmit(formData: FormData) {
-      "use server";
-    const recipe = {
-      category: formData.get("category"),
-      image: formData.get("image"),
-      title: formData.get("title"),
-      shortDescription: formData.get("shortDescription"),
-      text: formData.get("text"),
-    };
+  const router = useRouter();
 
-    console.log(recipe);
+  async function handleSubmit(formData: FormData) {
+    try {
+      const recipe = await createRecipe(formData);
+
+      console.log("Created recipe:", recipe);
+
+      router.push("/recipes");
+    } catch (error) {
+      console.error("Failed to create recipe:", error);
+    }
   }
 
   return (

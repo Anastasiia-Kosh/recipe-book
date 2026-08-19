@@ -17,13 +17,15 @@ export const recipeCategories = [
 export type RecipeCategory = (typeof recipeCategories)[number];
 
 export interface Recipe {
-  id: string;
+  _id: string;
   category: RecipeCategory;
   title: string;
   shortDescription: string;
   image: string;
+  imagePublicId: string;
   text: string;
-  baseRecipeId?: string;
+  baseRecipeId: string | null;
+  userId: string;
   createdAt: string;
   updatedAt: string;
 }
