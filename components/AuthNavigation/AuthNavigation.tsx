@@ -6,24 +6,25 @@ import { logout } from "@/lib/api/clientApi";
 import { useRouter } from "next/navigation";
 
 const AuthNavigation = () => {
-  const router = useRouter()
+  const router = useRouter();
   const { isAuthenticated, user, clearIsAuthenticated } = useAuth();
   const handleLogout = async () => {
     await logout();
     clearIsAuthenticated();
-    router.replace('/sign-in')
+    router.replace("/sign-in");
   };
   return isAuthenticated ? (
     <>
       <li className={css.navigationItem}>
-  <Link
-    href="/recipes/create"
-    prefetch={false}
-    className={css.navigationLink}
-  >
-    Додати рецепт
-  </Link>
-</li>
+        <Link
+          href="/recipes/create"
+          prefetch={false}
+          className={css.navigationLink}
+        >
+          Додати рецепт
+        </Link>
+      </li>
+      <Link href="/favorites">Обране</Link>
       <li className={css.navigationItem}>
         <Link href="/profile" prefetch={false} className={css.navigationLink}>
           Профіль

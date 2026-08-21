@@ -3,6 +3,7 @@ import type { Note } from "../../types/note";
 import { nextServerInstance } from "./api";
 import { User } from "@/types/user";
 import { Recipe } from "@/types/recipe";
+import { SavedRecipe } from "@/types/savedRecipe";
 
 interface FetchNotesResponse {
   notes: Note[];
@@ -96,4 +97,27 @@ export const fetchRecipeById = async (
   }
 
   return response.json();
+};
+
+export const fetchMyRecipes = async (): Promise<FetchRecipesResponse> => {
+  const cookiesData = await cookies();
+  const { data } = await nextServerInstance.get<FetchRecipesResponse>(`/users/me/recipes`, {
+    headers: { Cookie: cookiesData.toString() },
+  });
+
+  return data;
+};
+export const fetchSavedRecipes = async (): Promise<SavedRecipe[]> => {
+  const cookieStore = await cookies();
+
+  const { data } = await nextServerInstance.get<SavedRecipe[]>(
+    "/saved-recipes",
+    {
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+    },
+  );
+
+  return data;
 };

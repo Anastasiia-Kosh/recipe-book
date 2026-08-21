@@ -4,6 +4,7 @@ import css from "./SignUpPage.module.css";
 import { register, RegisterRequest } from "@/lib/api/clientApi";
 import { useAuth } from "@/lib/store/authStore";
 import { useState } from "react";
+import Link from "next/link";
 
 const SignUp = () => {
   const router = useRouter();
@@ -58,7 +59,12 @@ const SignUp = () => {
             Register
           </button>
         </div>
-
+<p>
+  Вже маєте акаунт?{" "}
+  <Link href="/sign-in">
+    Увійти
+  </Link>
+</p>
         {error && <p className={css.error}>{error}</p>}
       </form>
     </main>

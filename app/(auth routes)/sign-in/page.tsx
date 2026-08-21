@@ -4,6 +4,7 @@ import css from "./SignInPage.module.css";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/store/authStore";
 import { useState } from "react";
+import Link from "next/link";
 
 const SignIn = () => {
   const router = useRouter();
@@ -58,6 +59,12 @@ const SignIn = () => {
             Log in
           </button>
         </div>
+        <p>
+  Ще не маєте акаунта?{" "}
+  <Link href="/sign-up">
+    Зареєструватися
+  </Link>
+</p>
 
         {error && <p className={css.error}>{error}</p>}
       </form>

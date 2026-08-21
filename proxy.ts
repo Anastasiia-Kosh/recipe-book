@@ -1,30 +1,37 @@
-import { cookies } from 'next/headers';
-import { NextRequest, NextResponse } from 'next/server';
-import { checkSession } from './lib/api/serverApi';
-import { parse } from 'cookie';
+import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
+import { checkSession } from "./lib/api/serverApi";
+import { parse } from "cookie";
 
-const privateRoutes = [
-  "/profile",
-  "/notes",
-  "/recipes/create",
-];
-const publicRoutes = ['/sign-in', '/sign-up'];
+const privateRoutes = ["/profile", "/notes", "/recipes/create", "/favorites"];
+const publicRoutes = ["/sign-in", "/sign-up"];
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get('accessToken')?.value;
-  const refreshToken = cookieStore.get('refreshToken')?.value;
 
-  const isPublicRoute = publicRoutes.some((route) => pathname.startsWith(route));
-  const isPrivateRoute = privateRoutes.some((route) => pathname.startsWith(route));
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
+  const refreshToken = cookieStore.get("refreshToken")?.value;
+
+  // Окрема перевірка для маршруту редагування рецепту, оскільки він не входить до списку приватних маршрутів, але вимагає авторизації.
+  // ^/recipes/ → починається з /recipes/
+  // [^/]+      → тут має бути будь-який id
+  // /edit$     → закінчується на /edit
+  const isEditRecipeRoute = /^\/recipes\/[^/]+\/edit$/.test(pathname);
+  
+  const isPublicRoute = publicRoutes.some((route) =>
+    pathname.startsWith(route),
+  );
+  const isPrivateRoute =
+    privateRoutes.some((route) => pathname.startsWith(route)) ||
+    isEditRecipeRoute;
 
   if (!accessToken) {
     if (refreshToken) {
       // Якщо accessToken відсутній, але є refreshToken — потрібно перевірити сесію навіть для публічного маршруту,
       // адже сесія може залишатися активною, і тоді потрібно заборонити доступ до публічного маршруту.
       const data = await checkSession();
-      const setCookie = data.headers['set-cookie'];
+      const setCookie = data.headers["set-cookie"];
 
       if (setCookie) {
         const cookieArray = Array.isArray(setCookie) ? setCookie : [setCookie];
@@ -33,15 +40,17 @@ export async function proxy(request: NextRequest) {
           const options = {
             expires: parsed.Expires ? new Date(parsed.Expires) : undefined,
             path: parsed.Path,
-            maxAge: Number(parsed['Max-Age']),
+            maxAge: Number(parsed["Max-Age"]),
           };
-          if (parsed.accessToken) cookieStore.set('accessToken', parsed.accessToken, options);
-          if (parsed.refreshToken) cookieStore.set('refreshToken', parsed.refreshToken, options);
+          if (parsed.accessToken)
+            cookieStore.set("accessToken", parsed.accessToken, options);
+          if (parsed.refreshToken)
+            cookieStore.set("refreshToken", parsed.refreshToken, options);
         }
         // Якщо сесія все ще активна:
         // для публічного маршруту — виконуємо редірект на головну.
         if (isPublicRoute) {
-          return NextResponse.redirect(new URL('/', request.url), {
+          return NextResponse.redirect(new URL("/", request.url), {
             headers: {
               Cookie: cookieStore.toString(),
             },
@@ -64,13 +73,13 @@ export async function proxy(request: NextRequest) {
     }
     // приватний маршрут — редірект на сторінку входу
     if (isPrivateRoute) {
-      return NextResponse.redirect(new URL('/sign-in', request.url));
+      return NextResponse.redirect(new URL("/sign-in", request.url));
     }
   }
   // Якщо accessToken існує:
   // публічний маршрут — виконуємо редірект на головну
   if (isPublicRoute) {
-    return NextResponse.redirect(new URL('/', request.url));
+    return NextResponse.redirect(new URL("/", request.url));
   }
   // приватний маршрут — дозволяємо доступ
   if (isPrivateRoute) {
@@ -85,5 +94,7 @@ export const config = {
     "/profile/:path*",
     "/notes/:path*",
     "/recipes/create/:path*",
+    "/favorites/:path*",
+    "/recipes/:id/edit",
   ],
 };

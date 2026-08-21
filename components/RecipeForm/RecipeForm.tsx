@@ -1,21 +1,29 @@
 "use client";
 
-import { recipeCategories } from "@/types/recipe";
-import { createRecipe } from "@/lib/api/clientApi";
+import { Recipe, recipeCategories } from "@/types/recipe";
+import { createRecipe, updateRecipe } from "@/lib/api/clientApi";
 import { useRouter } from "next/navigation";
 
-export default function RecipeForm() {
+interface RecipeFormProps {
+  recipe?: Recipe;
+}
+export default function RecipeForm({ recipe }: RecipeFormProps) {
   const router = useRouter();
 
   async function handleSubmit(formData: FormData) {
     try {
-      const recipe = await createRecipe(formData);
+      if (recipe) {
+        const updatedRecipe = await updateRecipe(recipe._id, formData);
 
-      console.log("Created recipe:", recipe);
+        router.push(`/recipes/${updatedRecipe._id}`);
+        return;
+      }
 
-      router.push("/recipes");
+      const createdRecipe = await createRecipe(formData);
+
+      router.push(`/recipes/${createdRecipe._id}`);
     } catch (error) {
-      console.error("Failed to create recipe:", error);
+      console.error("Failed to save recipe:", error);
     }
   }
 
@@ -27,7 +35,7 @@ export default function RecipeForm() {
         <select
           id="category"
           name="category"
-          defaultValue=""
+          defaultValue={recipe?.category ?? ""}
           required
         >
           <option value="" disabled>
@@ -50,7 +58,7 @@ export default function RecipeForm() {
           name="image"
           type="file"
           accept="image/*"
-          required
+          required={!recipe}
         />
       </div>
 
@@ -61,35 +69,46 @@ export default function RecipeForm() {
           id="title"
           name="title"
           type="text"
+          defaultValue={recipe?.title ?? ""}
           required
         />
       </div>
 
       <div>
-        <label htmlFor="shortDescription">
-          Короткий опис
-        </label>
+        <label htmlFor="shortDescription">Короткий опис</label>
 
         <textarea
           id="shortDescription"
           name="shortDescription"
+          defaultValue={recipe?.shortDescription ?? ""}
           required
         />
       </div>
 
       <div>
-        <label htmlFor="text">Текст рецепта</label>
+        <label>
+          Інгредієнти
+          <textarea
+            name="ingredients"
+            defaultValue={recipe?.ingredients ?? ""}
+            required
+          />
+        </label>
+      </div>
 
-        <textarea
-          id="text"
-          name="text"
-          rows={15}
-          required
-        />
+      <div>
+        <label>
+          Приготування
+          <textarea
+            name="instructions"
+            defaultValue={recipe?.instructions ?? ""}
+            required
+          />
+        </label>
       </div>
 
       <button type="submit">
-        Створити рецепт
+        {recipe ? "Зберегти зміни" : "Створити рецепт"}
       </button>
     </form>
   );

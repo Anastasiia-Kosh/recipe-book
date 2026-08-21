@@ -23,7 +23,8 @@ export interface Recipe {
   shortDescription: string;
   image: string;
   imagePublicId: string;
-  text: string;
+  ingredients: string;
+  instructions: string;
   baseRecipeId: string | null;
   userId: string;
   createdAt: string;
