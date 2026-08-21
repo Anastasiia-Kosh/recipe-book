@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { checkSession } from "./lib/api/serverApi";
 import { parse } from "cookie";
 
-const privateRoutes = ["/profile", "/notes", "/recipes/create", "/favorites"];
+const privateRoutes = ["/profile", "/notes", "/recipes/create", "/favorites", "/my-recipes"];
 const publicRoutes = ["/sign-in", "/sign-up"];
 
 export async function proxy(request: NextRequest) {
@@ -96,5 +96,6 @@ export const config = {
     "/recipes/create/:path*",
     "/favorites/:path*",
     "/recipes/:id/edit",
+    "/my-recipes/:path*",
   ],
 };
