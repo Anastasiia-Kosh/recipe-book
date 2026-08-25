@@ -42,7 +42,7 @@ const ProfileEdit = () => {
   return <p>Завантаження...</p>;
 }
   return (
-    <main className={css.mainContent}>
+    <section className={css.mainContent}>
       <div className={css.profileCard}>
         <h1 className={css.formTitle}>Edit Profile</h1>
 
@@ -89,7 +89,7 @@ const ProfileEdit = () => {
           </div>
         </form>
       </div>
-    </main>
+    </section>
   );
 };
 

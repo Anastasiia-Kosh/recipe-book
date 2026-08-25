@@ -7,21 +7,8 @@ import { getMe, fetchMyRecipes, fetchSavedRecipes } from "@/lib/api/serverApi";
 import { Recipe } from "@/types/recipe";
 
 export const metadata: Metadata = {
-  title: "Profile",
-  description: "Profile page",
-  openGraph: {
-    title: "Profile",
-    description: "Profile pagep",
-    url: `https://notehub.com/profile`,
-    images: [
-      {
-        url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg?_gl=1*1ysfcv6*_gcl_au*ODUyOTQ5MTQ0LjE3NzcxOTI2ODU.*_ga*MTcyMDgxMzYzMC4xNzYyNzk3NTM2*_ga_PW0T7S5LDQ*czE3ODA4MTg2NzEkbzEyOSRnMSR0MTc4MDgyMDU2MCRqNTYkbDAkaDA.",
-        width: 1200,
-        height: 630,
-        alt: "Profile",
-      },
-    ],
-  },
+  title: "Профіль | RecipeBook",
+  description: "Особистий профіль користувача RecipeBook",
 };
 
 const Profile = async () => {
@@ -33,7 +20,7 @@ const Profile = async () => {
     .filter((recipe): recipe is Recipe => typeof recipe !== "string");
 
   return (
-    <main className={css.mainContent}>
+    <section className={css.mainContent}>
       <div className={css.profileCard}>
         <div className={css.header}>
           <h1 className={css.formTitle}>Profile Page</h1>
@@ -63,7 +50,7 @@ const Profile = async () => {
         <h2>Обране</h2>
         <RecipeList recipes={favoriteRecipes} refreshAfterChange={true}/>
       </section>
-    </main>
+    </section>
   );
 };
 

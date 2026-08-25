@@ -7,13 +7,17 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
 
-
 interface AuthNavigationProps {
   isMobile?: boolean;
-   onCloseMobileMenu?: () => void;
+  onCloseMobileMenu?: () => void;
+  pathname?: string;
 }
 
-const AuthNavigation = ({ isMobile = false,   onCloseMobileMenu, }: AuthNavigationProps) => {
+const AuthNavigation = ({
+  isMobile = false,
+  onCloseMobileMenu,
+   pathname,
+}: AuthNavigationProps) => {
   const router = useRouter();
   const { isAuthenticated, user, clearIsAuthenticated } = useAuth();
 
@@ -26,98 +30,121 @@ const AuthNavigation = ({ isMobile = false,   onCloseMobileMenu, }: AuthNavigati
   };
 
   const handleLogout = async () => {
+    onCloseMobileMenu?.();
+
     await logout();
     clearIsAuthenticated();
     router.replace("/sign-in");
   };
+
   if (isMobile) {
-  return isAuthenticated && user ? (
-    <>
-      <li>
-        <Link href="/recipes/create" onClick={onCloseMobileMenu}>Додати рецепт</Link>
-      </li>
+    return isAuthenticated && user ? (
+      <>
+        <li>
+          <Link href="/recipes/create" onClick={onCloseMobileMenu}>
+            Додати рецепт
+          </Link>
+        </li>
 
-      <li>
-        <Link href="/profile" onClick={onCloseMobileMenu}>Профіль</Link>
-      </li>
+        <li>
+          <Link href="/profile" onClick={onCloseMobileMenu}>
+            Профіль
+          </Link>
+        </li>
 
-      <li>
-        <Link href="/my-recipes" onClick={onCloseMobileMenu}>Мої рецепти</Link>
-      </li>
+        <li>
+          <Link href="/my-recipes" onClick={onCloseMobileMenu}>
+            Мої рецепти
+          </Link>
+        </li>
 
-      <li>
-        <Link href="/favorites" onClick={onCloseMobileMenu}>Обране</Link>
-      </li>
+        <li>
+          <Link href="/favorites" onClick={onCloseMobileMenu}>
+            Обране
+          </Link>
+        </li>
 
-      <li>
-        <button type="button" onClick={handleLogout}>
-          Вийти
-        </button>
-      </li>
-    </>
-  ) : (
-    <>
-      <li>
-        <Link href="/sign-in">Увійти</Link>
-      </li>
+        <li>
+          <button type="button" onClick={handleLogout}>
+            Вийти
+          </button>
+        </li>
+      </>
+    ) : (
+      <>
+        <li>
+          <Link href="/sign-in" onClick={onCloseMobileMenu}>
+            Увійти
+          </Link>
+        </li>
 
-      <li>
-        <Link href="/sign-up">Реєстрація</Link>
-      </li>
-    </>
-  );
-}
+        <li>
+          <Link href="/sign-up" onClick={onCloseMobileMenu}>
+            Реєстрація
+          </Link>
+        </li>
+      </>
+    );
+  }
   return isAuthenticated && user ? (
     <>
       <li className={css.navigationItem}>
-        <Link
-          href="/recipes/create"
-          prefetch={false}
-          className={css.navigationLink}
-        >
-          Додати рецепт
-        </Link>
+     <Link
+  href="/recipes/create"
+  prefetch={false}
+  className={`${css.navigationLink} ${
+    pathname === "/recipes/create" ? css.activeLink : ""
+  }`}
+>
+  Додати рецепт
+</Link>
       </li>
-      <li className={css.navigationItem}>
-        <button type="button" className={css.username} onClick={handleMenu}>
+      <li className={css.userMenu}>
+        <button type="button" className={css.userButton} onClick={handleMenu}>
           <Image
             src={user.avatar}
             alt={user.username}
             width={32}
             height={32}
+            className={css.avatar}
           />
 
           <span>{user.username}</span>
         </button>
       </li>
       {isUserMenuOpen && (
-        <div>
-          <li className={css.navigationItem}>
-            <Link
-              href="/profile"
-              prefetch={false}
-              className={css.navigationLink}
-              onClick={handleCloseMenu}
-            >
+        <ul className={css.dropdown}>
+          <li className={css.userInfo}>
+            <strong>{user.username}</strong>
+            <span>{user.email}</span>
+          </li>
+
+          <li className={css.divider} />
+          <li>
+            <Link href="/profile" prefetch={false} onClick={handleCloseMenu}>
               Профіль
             </Link>
           </li>
-            <li>
-            <Link href="/my-recipes" onClick={handleCloseMenu}>Мої рецепти</Link>
+          <li>
+            <Link href="/my-recipes" onClick={handleCloseMenu}>
+              Мої рецепти
+            </Link>
           </li>
           <li>
-            <Link href="/favorites" onClick={handleCloseMenu}>Обране</Link>
+            <Link href="/favorites" onClick={handleCloseMenu}>
+              Обране
+            </Link>
           </li>
           <li>
             <button
               type="button"
-              className={css.logoutButton}
+              className={css.dropdownLogout}
               onClick={handleLogout}
             >
               Вийти
             </button>
           </li>
-        </div>
+        </ul>
       )}
     </>
   ) : (

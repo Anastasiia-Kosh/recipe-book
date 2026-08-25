@@ -21,7 +21,7 @@ export default async function RecipePage({
   }
 
   return (
-    <main className="container">
+    <section className="container">
       <p>{recipe.category}</p>
 
       <h1>{recipe.title}</h1>
@@ -50,6 +50,6 @@ export default async function RecipePage({
   recipeId={recipe._id}
   recipeUserId={recipe.userId}
 />
-    </main>
+    </section>
   );
 }

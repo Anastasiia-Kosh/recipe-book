@@ -1,12 +1,32 @@
-import css from "./page.module.css"
+
+import Link from "next/link";
+import css from "./page.module.css";
+import HomeCategories from "@/components/HomeCategories/HomeCategories";
 
 export default function Home() {
   return (
-  <div className={css.container}>
-    <h1 className={css.title}>RecipeBook</h1>
-    <p className={css.description}>
-      Моя книга рецептів
-    </p>
+    <>
+    <section className={css.hero}>
+  <div className={`container ${css.heroContainer}`}>
+    <div className={css.heroText}>
+      <h1 className={css.title}>
+        Моя книга
+        <span className={css.titleAccent}>
+          улюблених рецептів
+        </span>
+      </h1>
+
+      <p className={css.description}>
+        Перевірені домашні рецепти, які хочеться готувати знову.
+      </p>
+
+      <Link href="/recipes" className={css.button}>
+        Переглянути рецепти
+      </Link>
+    </div>
   </div>
+</section>
+    <HomeCategories />
+      </>
   );
 }

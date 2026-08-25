@@ -4,8 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import css from "./Header.module.css";
 import AuthNavigation from "../AuthNavigation/AuthNavigation";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
+  const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const handleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
@@ -18,8 +20,8 @@ export default function Header() {
     <header className={css.header}>
       <div className="container">
         <div className={css.headerInner}>
-          <Link href="/" aria-label="RecipeBook">
-            RecipeBook
+          <Link href="/" aria-label="RecipeBook" className={css.logo}>
+            Recipe<span className={css.logoAccent}>Book</span>
           </Link>
           <button
             type="button"
@@ -33,13 +35,27 @@ export default function Header() {
 
           <nav aria-label="Main Navigation" className={css.desktopNav}>
             <ul className={css.navigation}>
-              <li>
-                <Link href="/">Головна</Link>
-              </li>
-              <li>
-                <Link href="/recipes">Рецепти</Link>
-              </li>
-              <AuthNavigation />
+              <li className={css.navLink}>
+              <Link
+                href="/"
+                className={pathname === "/" ? css.activeLink : undefined}
+              >
+                Головна
+                </Link>
+                </li>
+              <li className={css.navLink}>
+              <Link
+                href="/recipes"
+                className={
+                  pathname === "/recipes" || /^\/recipes\/[^/]+$/.test(pathname)
+                    ? css.activeLink
+                    : undefined
+                }
+              >
+                Рецепти
+                </Link>
+                </li>
+              <AuthNavigation pathname={pathname}/>
             </ul>
           </nav>
         </div>
@@ -60,6 +76,7 @@ export default function Header() {
               <AuthNavigation
                 isMobile
                 onCloseMobileMenu={handleCloseMobileMenu}
+                pathname={pathname}
               />
             </ul>
           </nav>

@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { checkSession } from "./lib/api/serverApi";
 import { parse } from "cookie";
 
-const privateRoutes = ["/profile", "/notes", "/recipes/create", "/favorites", "/my-recipes"];
+const privateRoutes = ["/profile", "/recipes/create", "/favorites", "/my-recipes"];
 const publicRoutes = ["/sign-in", "/sign-up"];
 
 export async function proxy(request: NextRequest) {
@@ -46,6 +46,8 @@ export async function proxy(request: NextRequest) {
             cookieStore.set("accessToken", parsed.accessToken, options);
           if (parsed.refreshToken)
             cookieStore.set("refreshToken", parsed.refreshToken, options);
+          if (parsed.sessionId)
+            cookieStore.set("sessionId", parsed.sessionId, options);
         }
         // Якщо сесія все ще активна:
         // для публічного маршруту — виконуємо редірект на головну.
@@ -92,7 +94,6 @@ export const config = {
     "/sign-in",
     "/sign-up",
     "/profile/:path*",
-    "/notes/:path*",
     "/recipes/create/:path*",
     "/favorites/:path*",
     "/recipes/:id/edit",

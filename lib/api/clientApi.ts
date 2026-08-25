@@ -1,49 +1,7 @@
 import { User } from "@/types/user";
-import type { Note } from "../../types/note";
 import { nextServerInstance } from "./api";
 import type { Recipe } from "@/types/recipe";
 import { SavedRecipe } from "@/types/savedRecipe";
-
-interface FetchNotesResponse {
-  notes: Note[];
-  totalPages: number;
-}
-
-export const fetchNotes = async (
-  userQuery: string,
-  page: number,
-  tag?: string,
-) => {
-  const response = await nextServerInstance.get<FetchNotesResponse>("/notes", {
-    params: {
-      search: userQuery,
-      page,
-      perPage: 12,
-      tag,
-    },
-  });
-  return response.data;
-};
-export const fetchNoteById = async (id: string) => {
-  const response = await nextServerInstance.get<Note>(`/notes/${id}`);
-  return response.data;
-};
-
-interface CreateNoteRequest {
-  title: string;
-  content: string;
-  tag: string;
-}
-
-export const createNote = async (newNote: CreateNoteRequest): Promise<Note> => {
-  const response = await nextServerInstance.post<Note>("/notes", newNote);
-  return response.data;
-};
-
-export const deleteNote = async (id: string): Promise<Note> => {
-  const response = await nextServerInstance.delete<Note>(`/notes/${id}`);
-  return response.data;
-};
 
 export interface LoginRequest {
   email: string;

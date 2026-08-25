@@ -13,13 +13,13 @@ export default async function FavoritesPage() {
     );
 
   return (
-    <main>
+    <section>
       <h1>Обране</h1>
 
       <RecipeList
         recipes={favoriteRecipes}
         refreshAfterChange
       />
-    </main>
+    </section>
   );
 }

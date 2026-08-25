@@ -28,7 +28,7 @@ const SignIn = () => {
     }
   };
   return (
-    <main className={css.mainContent}>
+    <section className={css.mainContent}>
       <form className={css.form} action={handleLogin}>
         <h1 className={css.formTitle}>Sign in</h1>
 
@@ -68,7 +68,7 @@ const SignIn = () => {
 
         {error && <p className={css.error}>{error}</p>}
       </form>
-    </main>
+    </section>
   );
 };
 export default SignIn;

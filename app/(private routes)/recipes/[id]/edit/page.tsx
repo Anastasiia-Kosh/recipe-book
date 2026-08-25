@@ -20,9 +20,9 @@ export default async function EditRecipePage({
   }
 
   return (
-    <main>
+    <section>
       <h1>Редагувати рецепт</h1>
       <RecipeForm recipe={recipe} />
-    </main>
+    </section>
   );
 }

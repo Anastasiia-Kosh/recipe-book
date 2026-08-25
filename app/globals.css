@@ -1,3 +1,19 @@
+:root {
+  --color-bg: #f8f4ee;
+  --color-surface: #fcf9f5;
+
+  --color-text: #302622;
+  --color-muted: #776a63;
+  --color-text-secondary: #594a43;
+  --color-accent: #a95660;
+  --color-accent-soft: #c77963;
+
+  --color-border: #e7ded4;
+
+  --font-sans: "Inter Tight", sans-serif;
+  --font-serif: "Playfair Display", serif;
+}
+
 *,
 *::before,
 *::after {
@@ -51,10 +67,20 @@ button {
   overflow: hidden;
 }
 body {
-  font-family: "Inter Tight", sans-serif;
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+
   padding: 0;
   margin: 0;
   min-width: 320px;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+}
+main {
+  flex: 1;
 }
 
 /* Styles for Mobile devices */

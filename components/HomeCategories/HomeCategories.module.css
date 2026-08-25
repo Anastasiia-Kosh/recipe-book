@@ -1,0 +1,141 @@
+.categories {
+  padding: 24px 0 72px;
+}
+
+.categoriesHeader {
+  margin-bottom: 32px;
+}
+
+.sectionLabel {
+  margin-bottom: 12px;
+
+  color: var(--color-accent);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.sectionTitle {
+  max-width: 620px;
+
+  font-family: var(--font-serif);
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1.08;
+}
+
+.allCategoriesLink {
+  display: inline-block;
+  margin-top: 16px;
+
+  color: var(--color-accent);
+  font-size: 15px;
+}
+
+.categoryGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.categoryCard {
+  display: block;
+
+  overflow: hidden;
+
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.categoryCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(48, 38, 34, 0.08);
+}
+
+.categoryImage {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.categoryImage img {
+  object-fit: cover;
+  transition: transform 300ms ease;
+}
+
+.categoryCard:hover .categoryImage img {
+  transform: scale(1.03);
+}
+
+.categoryInfo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 18px 20px;
+}
+
+.categoryInfo h3 {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.categoryInfo span {
+  color: var(--color-accent);
+  font-size: 22px;
+}
+.recipeCount {
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+/* Tablet */
+@media screen and (min-width: 768px) {
+  .categories {
+    padding-bottom: 88px;
+  }
+
+  .categoriesHeader {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+  }
+
+  .sectionTitle {
+    font-size: 48px;
+  }
+
+  .allCategoriesLink {
+    margin-top: 0;
+    white-space: nowrap;
+  }
+
+  .categoryGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+/* Desktop */
+@media screen and (min-width: 1440px) {
+  .categories {
+    padding-bottom: 112px;
+  }
+
+  .categoryGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .recipeCount {
+    font-size: 18px;
+  }
+}

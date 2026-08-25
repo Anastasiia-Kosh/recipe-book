@@ -1,25 +1,111 @@
-.main {
-  flex: 1;
+.hero {
+  min-height: 760px;
+
+  background-image: url("/images/home/hero-mobile.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
-.container {
-  width: 90%;
-  max-width: 1280px;
-  margin: 0px auto;
-  padding: 0 16px 16px;
+.heroBackground {
+  object-fit: cover;
+  object-position: 68% center;
+}
+
+.heroContainer {
+  display: flex;
+  align-items: flex-start;
+  min-height: 760px;
+  padding-top: 60px;
+}
+
+.heroText {
+  width: 100%;
+  max-width: 520px;
 }
 
 .title {
-  font-size: 36px;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 60px;
-  text-align: center;
+  margin-bottom: 20px;
+
+  font-family: var(--font-serif);
+  font-size: 46px;
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -1.5px;
+
+  color: var(--color-text);
+}
+
+.titleAccent {
+  display: block;
+
+  color: var(--color-accent);
+  font-style: italic;
+  font-weight: 400;
 }
 
 .description {
+  max-width: 300px;
+  margin-bottom: 32px;
+
+  color: var(--color-text-secondary);
   font-size: 18px;
-  color: #444444;
-  line-height: 28px;
-  margin-bottom: 16px;
+  line-height: 1.55;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 50px;
+  padding: 12px 26px;
+
+  background-color: var(--color-text);
+  color: var(--color-surface);
+
+  font-size: 15px;
+  font-weight: 500;
+}
+/* Tablet */
+@media screen and (min-width: 768px) {
+  .hero {
+    min-height: 680px;
+    background-image: url("/images/home/hero-tablet.png");
+  }
+
+  .heroContent {
+    min-height: 680px;
+    padding-top: 100px;
+  }
+
+  .title {
+    font-size: 68px;
+    margin-bottom: 24px;
+  }
+
+  .description {
+    font-size: 20px;
+    margin-bottom: 36px;
+    max-width: 350px;
+  }
+
+  .heroImage {
+    max-width: 704px;
+  }
+}
+
+/* Desktop */
+@media screen and (min-width: 1440px) {
+  .hero {
+    min-height: 720px;
+    background-image: url("/images/home/hero-desktop.png");
+  }
+
+  .heroContainer {
+    min-height: 720px;
+  }
+  .description {
+    font-size: 24px;
+  }
 }

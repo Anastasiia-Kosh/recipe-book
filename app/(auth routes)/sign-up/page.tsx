@@ -29,7 +29,7 @@ const SignUp = () => {
   };
 
   return (
-    <main className={css.mainContent}>
+    <section className={css.mainContent}>
       <h1 className={css.formTitle}>Sign up</h1>
       <form className={css.form} action={handleRegister}>
         <div className={css.formGroup}>
@@ -67,7 +67,7 @@ const SignUp = () => {
 </p>
         {error && <p className={css.error}>{error}</p>}
       </form>
-    </main>
+    </section>
   );
 };
 export default SignUp;

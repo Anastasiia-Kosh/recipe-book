@@ -1,0 +1,37 @@
+.categoryFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+  margin-bottom: 32px;
+}
+.categoryFilter {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.activeCategory {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+@media screen and (min-width: 1440px) {
+  .categoryFilters {
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+  .categoryFilter {
+    padding: 9px 18px;
+    font-size: 18px;
+  }
+  .categoryFilter:hover,
+  .categoryFilter:focus {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+}

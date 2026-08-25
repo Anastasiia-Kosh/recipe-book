@@ -1,0 +1,221 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.photoWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+
+  border-radius: 14px;
+  background-color: var(--color-surface);
+}
+
+.photo {
+  object-fit: cover;
+  transition: transform 500ms ease;
+}
+
+/* bookmark */
+
+.bookmarkWrapper {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+}
+
+.bookmarkWrapper button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+  padding: 0;
+
+  border: 1px solid rgba(48, 38, 34, 0.12);
+  border-radius: 50%;
+
+  background-color: rgba(252, 249, 245, 0.9);
+  color: var(--color-text);
+
+  font-size: 20px;
+  line-height: 1;
+
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+
+  transition:
+    transform 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease,
+    background-color 200ms ease;
+}
+
+.bookmarkWrapper button:hover,
+.bookmarkWrapper button:focus-visible {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  transform: scale(1.06);
+}
+
+/* content */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-top: 10px;
+}
+
+.category {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1;
+
+  padding: 5px 8px;
+
+  background-color: rgba(252, 249, 245, 0.92);
+  border-radius: 4px;
+  color: var(--color-accent);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin-bottom: 10px;
+
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.4px;
+
+  color: var(--color-text);
+
+  transition: color 200ms ease;
+}
+
+.description {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+
+  margin-bottom: 10px;
+
+  color: var(--color-muted);
+
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* details */
+
+.detailsLink {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+
+  margin-top: auto;
+
+  color: var(--color-text);
+
+  font-size: 14px;
+  font-weight: 500;
+
+  transition:
+    color 200ms ease,
+    gap 200ms ease;
+}
+
+.detailsLink::after {
+  content: "→";
+}
+
+.detailsLink:hover,
+.detailsLink:focus-visible {
+  color: var(--color-accent);
+  gap: 12px;
+}
+
+/* whole card hover */
+
+.card:hover .photo {
+  transform: scale(1.025);
+}
+
+.card:hover .title {
+  color: var(--color-accent);
+}
+
+/* tablet */
+
+@media screen and (min-width: 768px) {
+  .content {
+    padding-top: 14px;
+  }
+
+  .category {
+    font-size: 13px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+}
+
+/* desktop */
+
+@media screen and (min-width: 1440px) {
+  .photoWrapper {
+    border-radius: 16px;
+  }
+
+  .bookmarkWrapper {
+    top: 14px;
+    right: 14px;
+  }
+
+  .bookmarkWrapper button {
+    width: 44px;
+    height: 44px;
+  }
+
+  .content {
+    padding-top: 18px;
+  }
+
+  .category {
+    margin-bottom: 10px;
+  }
+
+  .title {
+    margin-bottom: 12px;
+
+    font-size: 32px;
+    line-height: 1.1;
+  }
+
+  .description {
+    margin-bottom: 12px;
+    font-size: 17px;
+  }
+
+  .detailsLink {
+    font-size: 17px;
+  }
+}

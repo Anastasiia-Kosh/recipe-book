@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getSavedRecipes } from "@/lib/api/clientApi";
+import { getSavedRecipes, checkSession } from "@/lib/api/clientApi";
 import type { SavedRecipe } from "@/types/savedRecipe";
 import RecipeCard from "@/components/RecipeCard/RecipeCard";
 import type { Recipe } from "@/types/recipe";
 import { useAuth } from "@/lib/store/authStore";
+import css from "./RecipeList.module.css"
 
 interface RecipeListProps {
   recipes: Recipe[];
@@ -16,42 +17,52 @@ interface RecipeListProps {
 export default function RecipeList({
   recipes,
   showActions = false,
- refreshAfterChange = false,
+  refreshAfterChange = false,
 }: RecipeListProps) {
   const user = useAuth((store) => store.user);
+  const isAuthenticated = useAuth((store) => store.isAuthenticated);
+  const clearIsAuthenticated = useAuth((store) => store.clearIsAuthenticated);
 
   const [savedRecipes, setSavedRecipes] = useState<SavedRecipe[]>([]);
-
   useEffect(() => {
-    if (!user) {
+    if (!isAuthenticated || !user) {
       return;
     }
 
     async function loadSavedRecipes() {
+      const hasSession = await checkSession();
+
+      if (!hasSession) {
+        clearIsAuthenticated();
+        return;
+      }
+
       const data = await getSavedRecipes();
       setSavedRecipes(data);
     }
 
     loadSavedRecipes();
-  }, [user]);
+  }, [isAuthenticated, user, clearIsAuthenticated]);
 
   if (recipes.length === 0) {
-    return <p>Рецептів поки немає.</p>;
+    return <p className={css.empty}>Рецептів поки немає.</p>;
   }
 
   return (
-    <ul>
+    <ul className={css.list}>
       {recipes.map((recipe) => {
-        const isSaved = savedRecipes.some((savedRecipe) => {
-          if (typeof savedRecipe.recipeId === "string") {
-            return savedRecipe.recipeId === recipe._id;
-          }
+        const isSaved =
+          isAuthenticated &&
+          !!user &&
+          savedRecipes.some((savedRecipe) => {
+            if (typeof savedRecipe.recipeId === "string") {
+              return savedRecipe.recipeId === recipe._id;
+            }
 
-          return savedRecipe.recipeId._id === recipe._id;
-        });
-
+            return savedRecipe.recipeId._id === recipe._id;
+          });
         return (
-          <li key={recipe._id}>
+          <li key={recipe._id} className={css.item}>
             <RecipeCard
               recipe={recipe}
               showActions={showActions}

@@ -30,3 +30,4 @@ export interface Recipe {
   createdAt: string;
   updatedAt: string;
 }
+

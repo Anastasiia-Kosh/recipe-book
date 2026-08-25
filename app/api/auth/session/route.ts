@@ -16,12 +16,11 @@ export async function GET() {
     }
 
     if (refreshToken) {
-      const apiRes = await api.get("auth/refresh", {
+      const apiRes = await api.post("auth/refresh", null, {
         headers: {
           Cookie: cookieStore.toString(),
         },
       });
-
       const setCookie = apiRes.headers["set-cookie"];
 
       if (setCookie) {
@@ -35,10 +34,8 @@ export async function GET() {
             path: parsed.Path,
             maxAge: Number(parsed["Max-Age"]),
             httpOnly: true,
-           secure: isProduction,
-  sameSite: isProduction
-    ? ("none" as const)
-    : ("lax" as const),
+            secure: isProduction,
+            sameSite: isProduction ? ("none" as const) : ("lax" as const),
           };
 
           if (parsed.accessToken)

@@ -1,55 +1,39 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
-import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 import AuthProvider from "@/components/AuthProvider/AuthProvider";
+import { Inter_Tight, Playfair_Display } from "next/font/google";
 
-const robotoFont = Roboto({
-  weight: ['400', '600'],
-  subsets: ['latin'],
-  variable: '--font-roboto',
-  display: 'swap',
-})
+const interTight = Inter_Tight({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-sans",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-serif",
+});
 
 export const metadata: Metadata = {
   title: "RecipeBook",
   description: "Моя книга рецептів",
-  //  openGraph: {
-  //     title: "Note Hub",
-  //    description: "Note-taking app",
-  //     url: `https://notehub.com/notes`,
-  //     images: [
-  //       {
-  //         url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg?_gl=1*1ysfcv6*_gcl_au*ODUyOTQ5MTQ0LjE3NzcxOTI2ODU.*_ga*MTcyMDgxMzYzMC4xNzYyNzk3NTM2*_ga_PW0T7S5LDQ*czE3ODA4MTg2NzEkbzEyOSRnMSR0MTc4MDgyMDU2MCRqNTYkbDAkaDA.',
-  //         width: 1200,
-  //         height: 630,
-  //         alt: "Note Hub",
-  //       },
-  //     ],
-  //   },
 };
 
 export default function RootLayout({
   children,
-  modal,
 }: Readonly<{
   children: React.ReactNode;
-  modal: React.ReactNode;
 }>) {
   return (
-    <html lang="uk" className={`${robotoFont.variable}`}>
-      <TanStackProvider>
+    <html lang="uk" className={`${interTight.variable} ${playfair.variable}`}>
+      <body>
         <AuthProvider>
-        <body>
           <Header />
           <main>{children}</main>
           <Footer />
-          {modal}
-          </body>
-          </AuthProvider>
-      </TanStackProvider>
+        </AuthProvider>
+      </body>
     </html>
   );
 }
