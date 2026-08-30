@@ -15,7 +15,7 @@ export default function DeleteRecipeButton({
   async function handleDelete() {
     await deleteRecipe(recipeId);
 
-    router.refresh();
+    router.push("/recipes");
   }
 
   return (

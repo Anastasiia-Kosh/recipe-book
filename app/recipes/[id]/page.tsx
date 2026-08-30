@@ -1,8 +1,9 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { fetchRecipeById } from "@/lib/api/serverApi";
-import EditRecipeLink from "@/components/EditRecipeLink/EditRecipeLink";
 import css from "./RecipePage.module.css"
+import RecipeActions from "@/components/RecipeActions/RecipeActions";
+import BackButton from "@/components/BackButton/BackButton";
 
 interface RecipePageProps {
   params: Promise<{
@@ -22,37 +23,54 @@ export default async function RecipePage({
   }
 
   return (
-        <section className={css.page}>
-    <div className="container">
-      <p>{recipe.category}</p>
+<section className={css.page}>
+  <div className="container">
+    <div className={css.hero}>
+      <div className={css.imageWrapper}>
+        <Image
+          src={recipe.image}
+          alt={recipe.title}
+          fill
+          className={css.image}
+          sizes="(min-width: 1440px) 600px, (min-width: 768px) 50vw, calc(100vw - 40px)"
+        />
+      </div>
 
-      <h1>{recipe.title}</h1>
+      <div className={css.intro}>
+        <p className={css.category}>{recipe.category}</p>
 
-      <Image
-        src={recipe.image}
-        alt={recipe.title}
-        width={800}
-        height={600}
-      />
+        <h1 className={css.title}>{recipe.title}</h1>
 
-      <p>{recipe.shortDescription}</p>
-<section>
-  <h2>Інгредієнти</h2>
-      <div style={{ whiteSpace: "pre-wrap" }}>
-        {recipe.ingredients}
-        </div>
-      </section>
-      <section>
-  <h2>Приготування</h2>
-      <div style={{ whiteSpace: "pre-wrap" }}>
-        {recipe.instructions}
-        </div>
-        </section>
-      <EditRecipeLink
+        <p className={css.description}>
+          {recipe.shortDescription}
+        </p>
+
+        <RecipeActions
   recipeId={recipe._id}
   recipeUserId={recipe.userId}
 />
       </div>
-      </section>
+    </div>
+
+   <div className={css.recipeDetails}>
+  <section className={css.recipeColumn}>
+    <h2 className={css.sectionTitle}>Інгредієнти</h2>
+
+    <div className={css.recipeText}>
+      {recipe.ingredients}
+    </div>
+  </section>
+
+  <section className={css.recipeColumn}>
+    <h2 className={css.sectionTitle}>Приготування</h2>
+
+    <div className={css.recipeText}>
+      {recipe.instructions}
+    </div>
+  </section>
+        </div>
+        <BackButton />
+  </div>
+</section>
   );
 }

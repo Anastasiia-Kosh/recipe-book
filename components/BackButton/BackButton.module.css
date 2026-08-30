@@ -1,0 +1,46 @@
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  /* margin-top: 40px; */
+  padding: 0;
+
+  border: none;
+  background: none;
+
+  color: var(--color-muted);
+
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    color 200ms ease,
+    transform 200ms ease;
+}
+
+.backButton:hover,
+.backButton:focus-visible {
+  color: var(--color-accent);
+}
+
+.backButton:active {
+  transform: translateX(-2px);
+}
+
+@media screen and (min-width: 768px) {
+  .backButton {
+    /* margin-top: 48px; */
+    font-size: 15px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .backButton {
+    /* margin-top: 56px; */
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,105 @@
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+/* спільна база */
+
+.actions button,
+.actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 42px;
+  padding: 10px 16px;
+
+  border-radius: 8px;
+
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    color 200ms ease,
+    background-color 200ms ease,
+    border-color 200ms ease,
+    transform 200ms ease;
+}
+
+/* Додати в обране */
+
+.saveAction button {
+  border: 1px solid var(--color-accent);
+  background-color: transparent;
+  color: var(--color-accent);
+}
+
+.saveAction button:hover,
+.saveAction button:focus-visible {
+  background-color: rgba(169, 86, 96, 0.08);
+}
+
+/* Редагувати */
+
+.editAction a {
+  border: 1px solid var(--color-accent);
+  background-color: var(--color-accent);
+  color: var(--color-surface);
+}
+
+.editAction a:hover,
+.editAction a:focus-visible {
+  background-color: transparent;
+  color: var(--color-accent);
+}
+
+/* Видалити */
+
+.deleteAction button {
+  border: 1px solid var(--color-border);
+  background-color: transparent;
+  color: var(--color-muted);
+}
+
+.deleteAction button:hover,
+.deleteAction button:focus-visible {
+  border-color: #a65353;
+  color: #a65353;
+}
+
+.actions button:active,
+.actions a:active {
+  transform: scale(0.98);
+}
+
+@media screen and (min-width: 768px) {
+  .actions {
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .actions button,
+  .actions a {
+    min-height: 44px;
+    padding: 11px 18px;
+    font-size: 15px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .actions {
+    margin-top: 32px;
+  }
+
+  .actions button,
+  .actions a {
+    padding: 12px 20px;
+    font-size: 16px;
+  }
+}
