@@ -1,7 +1,9 @@
 import { fetchRecipes } from "@/lib/api/serverApi";
 import RecipeList from "@/components/RecipeList/RecipeList";
 import Link from "next/link";
-import css from "./RecipesPage.module.css"
+import css from "./RecipesPage.module.css";
+import Pagination from "@/components/Pagination/Pagination";
+import SearchBox from "@/components/SearchBox/SearchBox";
 const categories = [
   "Macarons",
   "Млинці",
@@ -21,36 +23,51 @@ const categories = [
 interface RecipesPageProps {
   searchParams: Promise<{
     category?: string;
+    search?: string;
+    page?: string;
   }>;
 }
-
 export default async function RecipesPage(props: RecipesPageProps) {
-  const { category } = await props.searchParams;
-  const { recipes } = await fetchRecipes(category);
+  const { category, search, page } = await props.searchParams;
+  const currentPage = Number(page ?? 1);
+  const { recipes, totalPages } = await fetchRecipes({
+    category,
+    search,
+    page: currentPage,
+  });
 
   return (
-    <section className="container">
+    <section className={css.page}>
+    <div className="container">
       <h1>Рецепти</h1>
-
       <ul className={css.categoryFilters}>
         <li>
-          <Link href="/recipes" className={`${css.categoryFilter} ${
-  !category ? css.activeCategory : ""
-}`}>
+          <Link
+            href="/recipes"
+            className={`${css.categoryFilter} ${
+              !category ? css.activeCategory : ""
+            }`}
+          >
             Усі категорії
           </Link>
         </li>
         {categories.map((item) => (
           <li key={item}>
-            <Link href={`/recipes?category=${encodeURIComponent(item)}`} className={`${css.categoryFilter} ${
-  item === category ? css.activeCategory : ""
-}`}>
+            <Link
+              href={`/recipes?category=${encodeURIComponent(item)}`}
+              className={`${css.categoryFilter} ${
+                item === category ? css.activeCategory : ""
+              }`}
+            >
               {item}
             </Link>
           </li>
         ))}
       </ul>
-      <RecipeList recipes={recipes} />
-    </section>
+      <SearchBox />
+      <RecipeList recipes={recipes} search={search}/>
+      <Pagination totalPages={totalPages} currentPage={currentPage} />
+      </div>
+      </section>
   );
 }

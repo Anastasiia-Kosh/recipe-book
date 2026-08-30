@@ -1,3 +1,7 @@
+.page {
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
 .categoryFilters {
   display: flex;
   flex-wrap: wrap;
@@ -19,9 +23,19 @@
   color: var(--color-accent);
   border-color: var(--color-accent);
 }
-
+@media screen and (min-width: 768px) {
+  .page {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+}
 @media screen and (min-width: 1440px) {
+  .page {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
   .categoryFilters {
+    margin-top: 24px;
     gap: 10px;
     margin-bottom: 40px;
   }

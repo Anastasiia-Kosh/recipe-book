@@ -2,6 +2,7 @@
 import Link from "next/link";
 import css from "./page.module.css";
 import HomeCategories from "@/components/HomeCategories/HomeCategories";
+import HomeLatestRecipes from "@/components/HomeLatestRecipes/HomeLatestRecipes";
 
 export default function Home() {
   return (
@@ -26,7 +27,8 @@ export default function Home() {
     </div>
   </div>
 </section>
-    <HomeCategories />
-      </>
+      <HomeCategories />
+      <HomeLatestRecipes/>
+</>
   );
 }

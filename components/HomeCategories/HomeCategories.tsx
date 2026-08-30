@@ -57,7 +57,7 @@ export default async function HomeCategories() {
             <h2 className={css.sectionTitle}>Обери, що хочеться приготувати</h2>
           </div>
 
-          <Link href="/recipes" className={css.allCategoriesLink}>
+          <Link href="/recipes" className={css.link}>
             Усі категорії →
           </Link>
         </div>

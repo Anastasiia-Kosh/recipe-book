@@ -1,15 +1,40 @@
-import css from "./SearchBox.module.css"
+"use client";
+import css from "./SearchBox.module.css";
+import { useRouter, useSearchParams } from "next/navigation";
 
-interface SearchBoxProps {
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-export default function SearchBox({ onChange }: SearchBoxProps) {
+export default function SearchBox() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const handleSearch = (formData: FormData) => {
+  const search = formData.get("search")?.toString() ?? "";
+
+  const params = new URLSearchParams(searchParams.toString());
+
+  params.delete("category");
+
+  if (search) {
+    params.set("search", search);
+  } else {
+    params.delete("search");
+  }
+
+  params.set("page", "1");
+
+  router.push(`/recipes?${params.toString()}`);
+};
+
   return (
-    <input
-      className={css.input}
-      type="text"
-      placeholder="Search recipe"
-      onChange={onChange}
-    />
+<form action={handleSearch} className={css.form}>
+  <input
+    type="text"
+    name="search"
+    placeholder="Знайти рецепт або інгредієнт..."
+    className={css.input}
+  />
+
+  <button type="submit" className={css.button}>
+    Знайти
+  </button>
+</form>
   );
 }

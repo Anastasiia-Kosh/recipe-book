@@ -4,6 +4,7 @@ import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import AuthProvider from "@/components/AuthProvider/AuthProvider";
 import { Inter_Tight, Playfair_Display } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 
 const interTight = Inter_Tight({
   subsets: ["latin", "cyrillic"],
@@ -32,6 +33,7 @@ export default function RootLayout({
           <Header />
           <main>{children}</main>
           <Footer />
+          <Toaster/>
         </AuthProvider>
       </body>
     </html>

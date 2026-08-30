@@ -2,6 +2,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { fetchRecipeById } from "@/lib/api/serverApi";
 import EditRecipeLink from "@/components/EditRecipeLink/EditRecipeLink";
+import css from "./RecipePage.module.css"
 
 interface RecipePageProps {
   params: Promise<{
@@ -21,7 +22,8 @@ export default async function RecipePage({
   }
 
   return (
-    <section className="container">
+        <section className={css.page}>
+    <div className="container">
       <p>{recipe.category}</p>
 
       <h1>{recipe.title}</h1>
@@ -50,6 +52,7 @@ export default async function RecipePage({
   recipeId={recipe._id}
   recipeUserId={recipe.userId}
 />
-    </section>
+      </div>
+      </section>
   );
 }

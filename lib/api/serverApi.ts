@@ -30,13 +30,27 @@ export interface FetchRecipesResponse {
   totalRecipes: number;
   totalPages: number;
 }
-
+export interface FetchRecipesParams {
+  category?: string;
+  search?: string;
+  page?: number;
+  perPage?: number;
+}
 export const fetchRecipes = async (
-  category?: string,
+  filters: FetchRecipesParams ={},
 ): Promise<FetchRecipesResponse> => {
   const params = new URLSearchParams();
-  if (category) {
-    params.set("category", category);
+  if (filters.category) {
+    params.set("category", filters.category);
+  }
+    if (filters.search) {
+    params.set("search", filters.search);
+  }
+      if (filters.page) {
+    params.set("page", filters.page.toString());
+  }
+        if (filters.perPage) {
+    params.set("perPage", filters.perPage.toString());
   }
   const queryString = params.toString();
 
