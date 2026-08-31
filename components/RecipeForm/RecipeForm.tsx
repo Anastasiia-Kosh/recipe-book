@@ -3,6 +3,7 @@
 import { Recipe, recipeCategories } from "@/types/recipe";
 import { createRecipe, updateRecipe } from "@/lib/api/clientApi";
 import { useRouter } from "next/navigation";
+import RichTextEditor from "@/components/RichTextEditor/RichTextEditor";
 
 interface RecipeFormProps {
   recipe?: Recipe;
@@ -86,14 +87,12 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
       </div>
 
       <div>
-        <label>
-          Інгредієнти
-          <textarea
-            name="ingredients"
-            defaultValue={recipe?.ingredients ?? ""}
-            required
-          />
-        </label>
+        <p>Інгредієнти</p>
+
+        <RichTextEditor
+          name="ingredients"
+          initialContent={recipe?.ingredients ?? ""}
+        />
       </div>
 
       <div>

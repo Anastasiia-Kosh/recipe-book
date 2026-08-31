@@ -61,20 +61,20 @@
 
 /* Видалити */
 
-.deleteAction button {
+.deleteAction > button {
   border: 1px solid var(--color-border);
   background-color: transparent;
   color: var(--color-muted);
 }
 
-.deleteAction button:hover,
-.deleteAction button:focus-visible {
+.deleteAction > button:hover,
+.deleteAction > button:focus-visible {
   border-color: #a65353;
   color: #a65353;
 }
 
-.actions button:active,
-.actions a:active {
+.actions > button:active,
+.actions > a:active {
   transform: scale(0.98);
 }
 
@@ -84,8 +84,8 @@
     margin-top: 28px;
   }
 
-  .actions button,
-  .actions a {
+  .actions > button,
+  .actions > a {
     min-height: 44px;
     padding: 11px 18px;
     font-size: 15px;
@@ -97,8 +97,8 @@
     margin-top: 32px;
   }
 
-  .actions button,
-  .actions a {
+  .actions > button,
+  .actions > a {
     padding: 12px 20px;
     font-size: 16px;
   }

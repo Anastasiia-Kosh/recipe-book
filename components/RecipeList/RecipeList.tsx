@@ -6,12 +6,12 @@ import type { SavedRecipe } from "@/types/savedRecipe";
 import RecipeCard from "@/components/RecipeCard/RecipeCard";
 import type { Recipe } from "@/types/recipe";
 import { useAuth } from "@/lib/store/authStore";
-import css from "./RecipeList.module.css"
+import css from "./RecipeList.module.css";
 import toast from "react-hot-toast";
 
 interface RecipeListProps {
   recipes: Recipe[];
-   search?: string;
+  search?: string;
   showActions?: boolean;
   refreshAfterChange?: boolean;
 }
@@ -22,20 +22,18 @@ export default function RecipeList({
   showActions = false,
   refreshAfterChange = false,
 }: RecipeListProps) {
-
   const user = useAuth((store) => store.user);
   const isAuthenticated = useAuth((store) => store.isAuthenticated);
   const clearIsAuthenticated = useAuth((store) => store.clearIsAuthenticated);
 
-
   useEffect(() => {
-  if (search && recipes.length === 0) {
-    toast.error(`За запитом "${search}" нічого не знайдено`, {
-      id: "search-no-results",
-    } );
-  }
+    if (search && recipes.length === 0) {
+      toast.error(`За запитом "${search}" нічого не знайдено`, {
+        id: "search-no-results",
+      });
+    }
   }, [search, recipes.length]);
-  
+
   const [savedRecipes, setSavedRecipes] = useState<SavedRecipe[]>([]);
   useEffect(() => {
     if (!isAuthenticated || !user) {
@@ -68,6 +66,9 @@ export default function RecipeList({
           isAuthenticated &&
           !!user &&
           savedRecipes.some((savedRecipe) => {
+            if (!savedRecipe.recipeId) {
+              return false;
+            }
             if (typeof savedRecipe.recipeId === "string") {
               return savedRecipe.recipeId === recipe._id;
             }

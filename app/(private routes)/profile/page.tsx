@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Metadata } from "next";
 import RecipeList from "@/components/RecipeList/RecipeList";
 import { getMe, fetchMyRecipes, fetchSavedRecipes } from "@/lib/api/serverApi";
-import { Recipe } from "@/types/recipe";
+import type { Recipe } from "@/types/recipe";
 
 export const metadata: Metadata = {
   title: "Профіль | RecipeBook",
@@ -17,7 +17,7 @@ const Profile = async () => {
   const savedRecipes = await fetchSavedRecipes();
   const favoriteRecipes = savedRecipes
     .map((savedRecipe) => savedRecipe.recipeId)
-    .filter((recipe): recipe is Recipe => typeof recipe !== "string");
+    .filter((recipe): recipe is Recipe => recipe !== null && typeof recipe !== "string");
 
   return (
     <section className={css.mainContent}>
