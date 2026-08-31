@@ -5,6 +5,7 @@ import { register, RegisterRequest } from "@/lib/api/clientApi";
 import { useAuth } from "@/lib/store/authStore";
 import { useState } from "react";
 import Link from "next/link";
+import SubmitButton from "@/components/SubmitButton/SubmitButton";
 
 const SignUp = () => {
   const router = useRouter();
@@ -55,16 +56,13 @@ const SignUp = () => {
         </div>
 
         <div className={css.actions}>
-          <button type="submit" className={css.submitButton}>
-            Register
-          </button>
+          <SubmitButton pendingText="Реєструємо...">
+            Зареєструватися
+          </SubmitButton>
         </div>
-<p>
-  Вже маєте акаунт?{" "}
-  <Link href="/sign-in">
-    Увійти
-  </Link>
-</p>
+        <p>
+          Вже маєте акаунт? <Link href="/sign-in">Увійти</Link>
+        </p>
         {error && <p className={css.error}>{error}</p>}
       </form>
     </section>

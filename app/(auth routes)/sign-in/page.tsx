@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/store/authStore";
 import { useState } from "react";
 import Link from "next/link";
+import SubmitButton from "@/components/SubmitButton/SubmitButton";
 
 const SignIn = () => {
   const router = useRouter();
@@ -55,16 +56,14 @@ const SignIn = () => {
         </div>
 
         <div className={css.actions}>
-          <button type="submit" className={css.submitButton}>
+          {/* <button type="submit" className={css.submitButton}>
             Log in
-          </button>
+          </button> */}
+          <SubmitButton pendingText="Входимо...">Увійти</SubmitButton>
         </div>
         <p>
-  Ще не маєте акаунта?{" "}
-  <Link href="/sign-up">
-    Зареєструватися
-  </Link>
-</p>
+          Ще не маєте акаунта? <Link href="/sign-up">Зареєструватися</Link>
+        </p>
 
         {error && <p className={css.error}>{error}</p>}
       </form>

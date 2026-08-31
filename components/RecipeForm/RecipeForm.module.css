@@ -1,0 +1,258 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+.topFields {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.mainFields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.photoField {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.photoPicker {
+  position: relative;
+
+  display: block;
+
+  width: 100%;
+  aspect-ratio: 4 / 3;
+
+  overflow: hidden;
+
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+
+  background-color: var(--color-surface);
+
+  cursor: pointer;
+}
+
+.previewImage {
+  object-fit: cover;
+}
+
+.photoPlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  width: 100%;
+  height: 100%;
+
+  color: var(--color-muted);
+}
+
+.cameraIcon {
+  margin-bottom: 4px;
+  font-size: 42px;
+}
+
+.placeholderTitle {
+  color: var(--color-text);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.placeholderText {
+  font-size: 14px;
+}
+
+.photoOverlay {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  background-color: rgba(48, 38, 34, 0.5);
+  color: #fff;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  opacity: 0;
+
+  transition: opacity 180ms ease;
+}
+
+.photoPicker:hover .photoOverlay {
+  opacity: 1;
+}
+
+.editIcon {
+  font-size: 20px;
+}
+
+.hiddenFileInput {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  overflow: hidden;
+
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.label {
+  color: var(--color-text);
+
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+
+  background-color: var(--color-surface);
+  color: var(--color-text);
+
+  font-family: var(--font-sans);
+  font-size: 16px;
+}
+
+.input,
+.select {
+  min-height: 48px;
+  padding: 0 14px;
+}
+
+.textarea {
+  min-height: 120px;
+  padding: 14px;
+
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: var(--color-accent);
+  outline: 2px solid rgba(169, 86, 96, 0.12);
+  outline-offset: 1px;
+}
+
+.previewImage {
+  object-fit: cover;
+}
+.submitWrapper {
+  display: flex;
+  justify-content: flex-end;
+
+  padding-top: 8px;
+}
+
+.submitWrapper button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 46px;
+  padding: 12px 22px;
+
+  border: 1px solid var(--color-accent);
+  border-radius: 8px;
+
+  background-color: var(--color-accent);
+  color: #fff;
+
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    opacity 180ms ease;
+}
+
+.submitWrapper button:hover:not(:disabled) {
+  background-color: #944955;
+  border-color: #944955;
+}
+
+.submitWrapper button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media screen and (min-width: 768px) {
+  .form {
+    gap: 16px;
+  }
+
+  .label {
+    font-size: 16px;
+  }
+
+  .input,
+  .select {
+    min-height: 50px;
+  }
+
+  .textarea {
+    min-height: 140px;
+  }
+
+  .submitWrapper button {
+    min-height: 48px;
+    padding: 12px 24px;
+    font-size: 16px;
+  }
+  .topFields {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 56px;
+    align-items: start;
+  }
+
+  .mainFields {
+    gap: 10.5px;
+  }
+
+  .textarea {
+    min-height: 100px;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .mainFields {
+    gap: 24px;
+  }
+  .textarea {
+    min-height: 150px;
+  }
+}

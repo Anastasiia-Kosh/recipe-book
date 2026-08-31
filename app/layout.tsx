@@ -33,7 +33,47 @@ export default function RootLayout({
           <Header />
           <main>{children}</main>
           <Footer />
-          <Toaster/>
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 4000,
+
+              style: {
+                width: "min(420px, calc(100vw - 32px))",
+                padding: "16px 18px",
+
+                border: "1px solid var(--color-border)",
+                borderRadius: "10px",
+
+                background: "var(--color-surface)",
+                color: "var(--color-text)",
+
+                fontFamily: "var(--font-sans)",
+                fontSize: "16px",
+                lineHeight: "1.4",
+
+                boxShadow: "0 10px 30px rgba(48, 38, 34, 0.12)",
+              },
+
+              success: {
+                iconTheme: {
+                  primary: "#a95660",
+                  secondary: "#fcf9f5",
+                },
+              },
+
+              error: {
+                style: {
+                  border: "1px solid #d8a0a0",
+                },
+
+                iconTheme: {
+                  primary: "#a65353",
+                  secondary: "#fcf9f5",
+                },
+              },
+            }}
+          />
         </AuthProvider>
       </body>
     </html>

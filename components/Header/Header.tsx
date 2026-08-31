@@ -36,26 +36,28 @@ export default function Header() {
           <nav aria-label="Main Navigation" className={css.desktopNav}>
             <ul className={css.navigation}>
               <li className={css.navLink}>
-              <Link
-                href="/"
-                className={pathname === "/" ? css.activeLink : undefined}
-              >
-                Головна
+                <Link
+                  href="/"
+                  className={pathname === "/" ? css.activeLink : undefined}
+                >
+                  Головна
                 </Link>
-                </li>
+              </li>
               <li className={css.navLink}>
-              <Link
-                href="/recipes"
-                className={
-                  pathname === "/recipes" || /^\/recipes\/[^/]+$/.test(pathname)
-                    ? css.activeLink
-                    : undefined
-                }
-              >
-                Рецепти
+                <Link
+                  href="/recipes"
+                  className={
+                    pathname === "/recipes" ||
+                    (/^\/recipes\/[^/]+$/.test(pathname) &&
+                      pathname !== "/recipes/create")
+                      ? css.activeLink
+                      : undefined
+                  }
+                >
+                  Рецепти
                 </Link>
-                </li>
-              <AuthNavigation pathname={pathname}/>
+              </li>
+              <AuthNavigation pathname={pathname} />
             </ul>
           </nav>
         </div>
