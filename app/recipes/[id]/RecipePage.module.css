@@ -87,12 +87,51 @@
   color: var(--color-text);
 }
 
-.recipeText {
-  white-space: pre-wrap;
+.recipeText p {
+  margin-bottom: 12px;
+}
 
-  color: var(--color-text);
-  font-size: 16px;
-  line-height: 1.7;
+.recipeText ul,
+.recipeText ol {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.recipeText ul {
+  list-style-type: disc;
+}
+
+.recipeText ol {
+  list-style-type: decimal;
+}
+
+.recipeText li {
+  margin-bottom: 8px;
+}
+
+.recipeText li::marker {
+  color: var(--color-accent);
+}
+
+.recipeText li p {
+  margin: 0;
+}
+
+.recipeText strong {
+  font-weight: 600;
+}
+
+.recipeText em {
+  font-style: italic;
+}
+
+.recipeText h3 {
+  margin-top: 24px;
+  margin-bottom: 12px;
+
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 500;
 }
 
 @media screen and (min-width: 768px) {
@@ -129,10 +168,6 @@
 
   .sectionTitle {
     font-size: 34px;
-  }
-
-  .recipeText {
-    font-size: 17px;
   }
 }
 @media screen and (min-width: 1440px) {
@@ -195,10 +230,5 @@
   .sectionTitle {
     margin-bottom: 28px;
     font-size: 36px;
-  }
-
-  .recipeText {
-    font-size: 17px;
-    line-height: 1.75;
   }
 }

@@ -1,62 +1,138 @@
 .wrapper {
+  overflow: hidden;
+
   border: 1px solid var(--color-border);
   border-radius: 8px;
-  overflow: hidden;
+
   background-color: var(--color-surface);
 }
 
 .toolbar {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 4px;
+
   padding: 8px;
 
   border-bottom: 1px solid var(--color-border);
 }
 
 .toolbar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 34px;
+  min-height: 34px;
   padding: 6px 9px;
 
   border: none;
   border-radius: 4px;
-  background: transparent;
 
+  background-color: transparent;
   color: var(--color-text);
-  font: inherit;
+
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
 
   cursor: pointer;
+
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
 }
 
-.toolbar button:hover {
+.toolbar button:hover:not(:disabled) {
   background-color: var(--color-bg);
 }
 
-.toolbar .active {
+.toolbar button.active {
   background-color: var(--color-accent);
-  color: white;
+  color: #fff;
+}
+
+.toolbar button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  margin: 0 4px;
+
+  background-color: var(--color-border);
 }
 
 .editor {
-  padding: 12px;
+  padding: 16px;
 }
-.editor :global(.tiptap) ul {
-  margin: 8px 0;
+
+.editor :global(.tiptap) {
+  min-height: 180px;
+
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+
+  outline: none;
+}
+
+.editor :global(.tiptap) p {
+  margin-bottom: 10px;
+}
+
+.editor :global(.tiptap) p:last-child {
+  margin-bottom: 0;
+}
+
+.editor :global(.tiptap) h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.editor :global(.tiptap) ul,
+.editor :global(.tiptap) ol {
+  margin: 10px 0;
   padding-left: 28px;
+}
+
+.editor :global(.tiptap) ul {
   list-style-type: disc;
 }
 
 .editor :global(.tiptap) ol {
-  margin: 8px 0;
-  padding-left: 28px;
   list-style-type: decimal;
 }
 
 .editor :global(.tiptap) li {
   display: list-item;
+  margin-bottom: 4px;
 }
 
 .editor :global(.tiptap) li p {
   margin: 0;
 }
+
 .editor :global(.tiptap) li::marker {
   color: var(--color-accent);
+}
+
+@media screen and (min-width: 768px) {
+  .editor {
+    padding: 18px;
+  }
+
+  .editor :global(.tiptap) {
+    min-height: 220px;
+    font-size: 17px;
+  }
 }

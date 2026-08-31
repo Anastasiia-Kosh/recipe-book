@@ -96,14 +96,12 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
       </div>
 
       <div>
-        <label>
-          Приготування
-          <textarea
-            name="instructions"
-            defaultValue={recipe?.instructions ?? ""}
-            required
-          />
-        </label>
+        <p>Приготування</p>
+
+        <RichTextEditor
+          name="instructions"
+          initialContent={recipe?.instructions ?? ""}
+        />
       </div>
 
       <button type="submit">

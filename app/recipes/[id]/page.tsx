@@ -56,17 +56,19 @@ export default async function RecipePage({
   <section className={css.recipeColumn}>
     <h2 className={css.sectionTitle}>Інгредієнти</h2>
 
-    <div className={css.recipeText}>
-      {recipe.ingredients}
-    </div>
+  <div
+  className={css.recipeText}
+  dangerouslySetInnerHTML={{ __html: recipe.ingredients }}
+/>
   </section>
 
   <section className={css.recipeColumn}>
     <h2 className={css.sectionTitle}>Приготування</h2>
 
-    <div className={css.recipeText}>
-      {recipe.instructions}
-    </div>
+  <div
+  className={css.recipeText}
+  dangerouslySetInnerHTML={{ __html: recipe.instructions }}
+/>
   </section>
         </div>
         <BackButton />
