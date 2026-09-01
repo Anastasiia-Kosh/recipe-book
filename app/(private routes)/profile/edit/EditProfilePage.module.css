@@ -1,115 +1,249 @@
-/* page.module.css */
-
-.mainContent {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 32px;
+.page {
+  padding-top: 24px;
+  padding-bottom: 24px;
 }
-
 .profileCard {
-  max-width: 500px;
-  width: 100%;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  padding: 24px;
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
 .formTitle {
-  font-size: 32px;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 24px;
-  text-align: left;
+  color: var(--color-text);
+  font-family: var(--font-serif);
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+/* PHOTO */
+
+.avatarSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.avatarPicker {
+  position: relative;
+
+  width: 160px;
+  height: 160px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+
+  cursor: pointer;
 }
 
 .avatar {
-  border-radius: 50%;
   object-fit: cover;
-  display: block;
-  margin: 0 auto 24px auto;
 }
+
+.avatarOverlay {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 16px;
+  border-radius: 50%;
+
+  background-color: rgba(48, 38, 34, 0.52);
+  color: #fff;
+
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+
+  opacity: 0;
+
+  transition: opacity 180ms ease;
+}
+
+.avatarPicker:hover .avatarOverlay {
+  opacity: 1;
+}
+
+.hiddenFileInput {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  overflow: hidden;
+
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* FORM */
 
 .profileInfo {
-  font-size: 18px;
-  color: #333;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  align-items: flex-start;
-}
+  gap: 24px;
 
-.usernameWrapper {
-  display: flex;
-  flex-direction: column;
   width: 100%;
 }
 
-.usernameWrapper label {
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  min-width: 0;
+}
+
+.label {
+  color: var(--color-text);
+
+  font-size: 15px;
   font-weight: 600;
-  margin-bottom: 8px;
-  color: #222;
 }
 
 .input {
-  padding: 10px 12px;
-  font-size: 16px;
-  border: 1.5px solid #ccc;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+
+  border: 1px solid var(--color-border);
   border-radius: 8px;
-  outline-offset: 2px;
-  transition: border-color 0.2s ease;
+
+  background-color: var(--color-surface);
+  color: var(--color-text);
+
+  font: inherit;
+  font-size: 16px;
 }
 
 .input:focus {
-  border-color: #0d6efd;
-  outline: none;
+  border-color: var(--color-accent);
+  outline: 2px solid rgba(169, 86, 96, 0.12);
+  outline-offset: 1px;
 }
 
-.profileInfo p {
-  margin: 0;
-  font-weight: 500;
+.email {
+  color: var(--color-muted);
+  font-size: 16px;
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
 }
 
-.saveButton {
-  padding: 12px 24px;
-  font-size: 18px;
-  font-weight: 600;
-  background-color: #0d6efd;
-  color: white;
-  border: none;
+/* ACTIONS */
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  padding-top: 8px;
+}
+
+.actions button,
+.cancelButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 46px;
+  padding: 11px 20px;
+
   border-radius: 8px;
+
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  align-self: stretch;
-  text-align: center;
 }
 
-.saveButton:hover {
-  background-color: #0b5ed7;
+.actions button {
+  gap: 8px;
+
+  border: 1px solid var(--color-accent);
+
+  background-color: var(--color-accent);
+  color: #fff;
+}
+
+.actions button:hover:not(:disabled) {
+  background-color: #944955;
+  border-color: #944955;
+}
+
+.actions button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .cancelButton {
-  padding: 8px 16px;
-  font-size: 16px;
+  border: 1px solid var(--color-border);
+
   background-color: transparent;
-  color: #6c757d;
-  border: 2px solid #6c757d;
-  border-radius: 8px;
-  cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
+  color: var(--color-text);
 }
 
 .cancelButton:hover {
-  background-color: #6c757d;
-  color: white;
+  border-color: var(--color-accent);
+  color: var(--color-accent);
 }
-.actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 20px;
+@media screen and (min-width: 768px) {
+  .page {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+  .profileCard {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    column-gap: 48px;
+    row-gap: 40px;
+
+    align-items: start;
+  }
+
+  .formTitle {
+    grid-column: 1 / -1;
+
+    font-size: 44px;
+  }
+
+  .avatarPicker {
+    width: 180px;
+    height: 180px;
+  }
+
+  .label {
+    font-size: 16px;
+  }
+
+  .input {
+    min-height: 50px;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .page {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+  .profileCard {
+    grid-template-columns: 220px minmax(0, 640px);
+    column-gap: 64px;
+  }
+
+  .formTitle {
+    font-size: 52px;
+  }
+
+  .avatarPicker {
+    width: 200px;
+    height: 200px;
+  }
 }
