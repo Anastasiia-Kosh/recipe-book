@@ -31,7 +31,7 @@ const Profile = async () => {
             className={css.avatar}
           />
 
-          <div>
+          <div className={css.userDetails}>
             <h1 className={css.title}>{username}</h1>
             <p className={css.email}>{email}</p>
           </div>
