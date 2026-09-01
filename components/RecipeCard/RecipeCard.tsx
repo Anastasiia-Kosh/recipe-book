@@ -23,6 +23,7 @@ export default function RecipeCard({
           src={recipe.image}
           alt={recipe.title}
           fill
+          loading="eager"
           className={css.photo}
           sizes="(min-width: 1440px) 420px, (min-width: 768px) calc(50vw - 44px), calc(100vw - 40px)"
         />

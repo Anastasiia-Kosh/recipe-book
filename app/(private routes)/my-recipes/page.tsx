@@ -1,6 +1,6 @@
 import RecipeList from "@/components/RecipeList/RecipeList";
 import { fetchMyRecipes } from "@/lib/api/serverApi";
-import css from "./MyRecipesPage.module.css";
+import css from "../MyRecipesPage-Favorites.module.css"
 import RecipesEmptyState from "@/components/RecipesEmptyState/RecipesEmptyState";
 
 export default async function MyRecipesPage() {

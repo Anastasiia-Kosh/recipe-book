@@ -1,11 +1,12 @@
 "use client";
 import { login, LoginRequest } from "@/lib/api/clientApi";
-import css from "./SignInPage.module.css";
+import css from "../AuthPage.module.css";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/store/authStore";
 import { useState } from "react";
 import Link from "next/link";
 import SubmitButton from "@/components/SubmitButton/SubmitButton";
+import Image from "next/image";
 
 const SignIn = () => {
   const router = useRouter();
@@ -29,44 +30,64 @@ const SignIn = () => {
     }
   };
   return (
-    <section className={css.mainContent}>
-      <form className={css.form} action={handleLogin}>
-        <h1 className={css.formTitle}>Sign in</h1>
+    <section className={css.page}>
+      <div className="container">
+        <div className={css.authWrapper}>
+          <h1 className={css.title}>Увійти</h1>
 
-        <div className={css.formGroup}>
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            className={css.input}
-            required
-          />
+          <form className={css.form} action={handleLogin}>
+            <div className={css.field}>
+              <label htmlFor="email" className={css.label}>
+                Email
+              </label>
+
+              <input
+                id="email"
+                type="email"
+                name="email"
+                 autoComplete="email"
+                className={css.input}
+                required
+              />
+            </div>
+
+            <div className={css.field}>
+              <label htmlFor="password" className={css.label}>
+                Пароль
+              </label>
+
+              <input
+                id="password"
+                type="password"
+                name="password"
+                autoComplete="current-password"
+                className={css.input}
+                required
+              />
+            </div>
+
+            <SubmitButton pendingText="Входимо..." fullWidth>Увійти</SubmitButton>
+
+            <p className={css.switchText}>
+              Ще не маєте акаунта?{" "}
+              <Link href="/sign-up" className={css.switchLink}>
+                Зареєструватися
+              </Link>
+            </p>
+            <div className={css.imageWrapper}>
+              <Image
+                src="/images/auth/sing-in2.png"
+                alt=""
+                fill
+                loading="eager"
+                className={css.image}
+                sizes="(min-width: 768px) 40vw, 80vw"
+              />
+            </div>
+            {error && <p className={css.error}>{error}</p>}
+          </form>
         </div>
-
-        <div className={css.formGroup}>
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            className={css.input}
-            required
-          />
-        </div>
-
-        <div className={css.actions}>
-          {/* <button type="submit" className={css.submitButton}>
-            Log in
-          </button> */}
-          <SubmitButton pendingText="Входимо...">Увійти</SubmitButton>
-        </div>
-        <p>
-          Ще не маєте акаунта? <Link href="/sign-up">Зареєструватися</Link>
-        </p>
-
-        {error && <p className={css.error}>{error}</p>}
-      </form>
+      </div>
     </section>
   );
 };

@@ -1,0 +1,152 @@
+.page {
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.authWrapper {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.title {
+  margin-bottom: 24px;
+
+  color: var(--color-text);
+
+  font-family: var(--font-serif);
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  padding: 28px;
+
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+
+  background-color: var(--color-surface);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.label {
+  color: var(--color-text);
+
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+
+  background-color: var(--color-bg);
+  color: var(--color-text);
+
+  font-family: var(--font-sans);
+  font-size: 16px;
+}
+
+.input:focus {
+  border-color: var(--color-accent);
+
+  outline: 2px solid rgba(169, 86, 96, 0.12);
+  outline-offset: 1px;
+}
+
+.switchText {
+  color: var(--color-muted);
+
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.switchLink {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.switchLink:hover {
+  text-decoration: underline;
+}
+
+.error {
+  color: #a65353;
+
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+}
+.imageWrapper {
+  position: relative;
+
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 3/2;
+
+  margin: 0 auto;
+}
+
+.image {
+  object-fit: contain;
+}
+@media screen and (min-width: 768px) {
+  .page {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+
+  .title {
+    margin-bottom: 32px;
+    font-size: 48px;
+  }
+
+  .form {
+    gap: 24px;
+    padding: 36px;
+  }
+
+  .label {
+    font-size: 16px;
+  }
+
+  .input {
+    min-height: 50px;
+  }
+
+  .switchText {
+    font-size: 15px;
+  }
+  .imageWrapper {
+    max-width: 420px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .page {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .title {
+    font-size: 52px;
+  }
+  .imageWrapper {
+    max-width: 460px;
+  }
+}

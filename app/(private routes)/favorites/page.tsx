@@ -1,7 +1,7 @@
 import RecipeList from "@/components/RecipeList/RecipeList";
 import { fetchSavedRecipes } from "@/lib/api/serverApi";
 import type { Recipe } from "@/types/recipe";
-import css from "./FavoritesPage.module.css"
+import css from "../MyRecipesPage-Favorites.module.css"
 import RecipesEmptyState from "@/components/RecipesEmptyState/RecipesEmptyState";
 
 export default async function FavoritesPage() {

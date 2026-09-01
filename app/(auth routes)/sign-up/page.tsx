@@ -1,11 +1,12 @@
 "use client";
 import { useRouter } from "next/navigation";
-import css from "./SignUpPage.module.css";
+import css from "../AuthPage.module.css";
 import { register, RegisterRequest } from "@/lib/api/clientApi";
 import { useAuth } from "@/lib/store/authStore";
 import { useState } from "react";
 import Link from "next/link";
 import SubmitButton from "@/components/SubmitButton/SubmitButton";
+import Image from "next/image";
 
 const SignUp = () => {
   const router = useRouter();
@@ -30,41 +31,66 @@ const SignUp = () => {
   };
 
   return (
-    <section className={css.mainContent}>
-      <h1 className={css.formTitle}>Sign up</h1>
-      <form className={css.form} action={handleRegister}>
-        <div className={css.formGroup}>
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            className={css.input}
-            required
-          />
-        </div>
+    <section className={css.page}>
+      <div className="container">
+        <div className={css.authWrapper}>
+          <h1 className={css.title}>Реєстрація</h1>
 
-        <div className={css.formGroup}>
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            className={css.input}
-            required
-          />
-        </div>
+          <form className={css.form} action={handleRegister}>
+            <div className={css.field}>
+              <label htmlFor="email" className={css.label}>
+                Email
+              </label>
 
-        <div className={css.actions}>
-          <SubmitButton pendingText="Реєструємо...">
-            Зареєструватися
-          </SubmitButton>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                 autoComplete="email"
+                className={css.input}
+                required
+              />
+            </div>
+
+            <div className={css.field}>
+              <label htmlFor="password" className={css.label}>
+                Пароль
+              </label>
+
+              <input
+                id="password"
+                type="password"
+                name="password"
+                autoComplete="new-password"
+                className={css.input}
+                required
+              />
+            </div>
+
+            <SubmitButton pendingText="Реєструємо..." fullWidth>
+              Зареєструватися
+            </SubmitButton>
+
+            <p className={css.switchText}>
+              Вже маєте акаунт?{" "}
+              <Link href="/sign-in" className={css.switchLink}>
+                Увійти
+              </Link>
+            </p>
+ <div className={css.imageWrapper}>
+              <Image
+                src="/images/auth/sing-up2.png"
+                alt=""
+                fill
+                loading="eager"
+                className={css.image}
+                sizes="(min-width: 768px) 40vw, 80vw"
+              />
+            </div>
+            {error && <p className={css.error}>{error}</p>}
+          </form>
         </div>
-        <p>
-          Вже маєте акаунт? <Link href="/sign-in">Увійти</Link>
-        </p>
-        {error && <p className={css.error}>{error}</p>}
-      </form>
+      </div>
     </section>
   );
 };
