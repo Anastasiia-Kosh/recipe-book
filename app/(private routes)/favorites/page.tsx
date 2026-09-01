@@ -1,6 +1,8 @@
 import RecipeList from "@/components/RecipeList/RecipeList";
 import { fetchSavedRecipes } from "@/lib/api/serverApi";
 import type { Recipe } from "@/types/recipe";
+import css from "./FavoritesPage.module.css"
+import RecipesEmptyState from "@/components/RecipesEmptyState/RecipesEmptyState";
 
 export default async function FavoritesPage() {
   const savedRecipes = await fetchSavedRecipes();
@@ -9,17 +11,29 @@ export default async function FavoritesPage() {
     .map((savedRecipe) => savedRecipe.recipeId)
     .filter(
       (recipe): recipe is Recipe =>
-        typeof recipe !== "string",
+        recipe !== null && typeof recipe !== "string",
     );
 
   return (
-    <section>
-      <h1>Обране</h1>
+    <section className={css.page}>
+      <div className="container">
+      <h1 className={css.title}>Обрані рецепти</h1>
 
-      <RecipeList
-        recipes={favoriteRecipes}
-        refreshAfterChange
-      />
+      {favoriteRecipes.length > 0 ? (
+  <RecipeList
+    recipes={favoriteRecipes}
+    refreshAfterChange
+  />
+) : (
+  <RecipesEmptyState
+    image="/images/empty-states/favorites.png"
+    title="У вас поки немає обраних рецептів"
+    description="Додавайте улюблені рецепти в обране, щоб швидко знаходити їх пізніше."
+    linkHref="/recipes"
+    linkText="Переглянути рецепти"
+  />
+)}
+        </div>
     </section>
   );
 }

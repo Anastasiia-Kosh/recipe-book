@@ -12,14 +12,12 @@ import toast from "react-hot-toast";
 interface RecipeListProps {
   recipes: Recipe[];
   search?: string;
-  showActions?: boolean;
   refreshAfterChange?: boolean;
 }
 
 export default function RecipeList({
   recipes,
   search,
-  showActions = false,
   refreshAfterChange = false,
 }: RecipeListProps) {
   const user = useAuth((store) => store.user);
@@ -79,7 +77,6 @@ export default function RecipeList({
           <li key={recipe._id} className={css.item}>
             <RecipeCard
               recipe={recipe}
-              showActions={showActions}
               initialSaved={isSaved}
               refreshAfterChange={refreshAfterChange}
             />

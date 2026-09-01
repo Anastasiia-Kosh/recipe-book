@@ -2,7 +2,6 @@ import Link from "next/link";
 import css from "./ProfilePage.module.css";
 import Image from "next/image";
 import { Metadata } from "next";
-import RecipeList from "@/components/RecipeList/RecipeList";
 import { getMe, fetchMyRecipes, fetchSavedRecipes } from "@/lib/api/serverApi";
 import type { Recipe } from "@/types/recipe";
 
@@ -20,38 +19,63 @@ const Profile = async () => {
     .filter((recipe): recipe is Recipe => recipe !== null && typeof recipe !== "string");
 
   return (
-    <section className={css.mainContent}>
-      <div className={css.profileCard}>
-        <div className={css.header}>
-          <h1 className={css.formTitle}>Profile Page</h1>
-          <Link href="/profile/edit" className={css.editProfileButton}>
-            Edit Profile
-          </Link>
-        </div>
-        <div className={css.avatarWrapper}>
+  <section className={css.page}>
+    <div className="container">
+      <div className={css.profileHeader}>
+        <div className={css.userInfo}>
           <Image
             src={avatar}
-            alt="User Avatar"
+            alt="Аватар користувача"
             width={120}
             height={120}
             className={css.avatar}
           />
+
+          <div>
+            <h1 className={css.title}>{username}</h1>
+            <p className={css.email}>{email}</p>
+          </div>
         </div>
-        <div className={css.profileInfo}>
-          <p>Username: {username}</p>
-          <p>Email: {email}</p>
-        </div>
+
+        <Link href="/profile/edit" className={css.editProfileButton}>
+          Редагувати профіль
+        </Link>
       </div>
-      <section>
-        <h2>Мої рецепти</h2>
-        <RecipeList recipes={recipes} showActions={true} />
-      </section>
-      <section>
-        <h2>Обране</h2>
-        <RecipeList recipes={favoriteRecipes} refreshAfterChange={true}/>
-      </section>
-    </section>
-  );
+
+      <div className={css.profileNavigation}>
+        <Link href="/my-recipes" className={css.navigationCard}>
+          <div>
+            <h2 className={css.cardTitle}>Мої рецепти</h2>
+            <p className={css.cardDescription}>
+              Рецепти, які ви створили
+            </p>
+          </div>
+
+          <div className={css.cardFooter}>
+            <span className={css.count}>{recipes.length}</span>
+            <span className={css.cardLink}>Переглянути →</span>
+          </div>
+        </Link>
+
+        <Link href="/favorites" className={css.navigationCard}>
+          <div>
+            <h2 className={css.cardTitle}>Обрані рецепти</h2>
+            <p className={css.cardDescription}>
+              Рецепти, які ви додали в обране
+            </p>
+          </div>
+
+          <div className={css.cardFooter}>
+            <span className={css.count}>
+              {favoriteRecipes.length}
+            </span>
+            <span className={css.cardLink}>Переглянути →</span>
+          </div>
+        </Link>
+      </div>
+    </div>
+  </section>
+);
 };
 
 export default Profile;

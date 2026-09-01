@@ -23,12 +23,14 @@
   color: var(--color-accent);
   border-color: var(--color-accent);
 }
+/* Tablet */
 @media screen and (min-width: 768px) {
   .page {
     padding-top: 32px;
     padding-bottom: 32px;
   }
 }
+/* Desktop */
 @media screen and (min-width: 1440px) {
   .page {
     padding-top: 64px;

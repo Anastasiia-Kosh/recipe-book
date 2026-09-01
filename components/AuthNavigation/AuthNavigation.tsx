@@ -60,7 +60,7 @@ const AuthNavigation = ({
 
         <li>
           <Link href="/favorites" onClick={onCloseMobileMenu}>
-            Обране
+            Обрані рецепти
           </Link>
         </li>
 
@@ -132,7 +132,7 @@ const AuthNavigation = ({
           </li>
           <li>
             <Link href="/favorites" onClick={handleCloseMenu}>
-              Обране
+              Обрані рецепти
             </Link>
           </li>
           <li>

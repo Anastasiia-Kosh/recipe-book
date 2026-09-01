@@ -7,14 +7,12 @@ import css from "./RecipeCard.module.css";
 
 interface RecipeCardProps {
   recipe: Recipe;
-  showActions?: boolean;
   initialSaved?: boolean;
   refreshAfterChange?: boolean;
 }
 
 export default function RecipeCard({
   recipe,
-  showActions = false,
   initialSaved = false,
   refreshAfterChange = false,
 }: RecipeCardProps) {
@@ -40,8 +38,6 @@ export default function RecipeCard({
       </div>
 
       <div className={css.content}>
-        
-
         <h2 className={css.title}>{recipe.title}</h2>
 
         <p className={css.description}>{recipe.shortDescription}</p>
@@ -49,14 +45,6 @@ export default function RecipeCard({
         <Link href={`/recipes/${recipe._id}`} className={css.detailsLink}>
           Переглянути рецепт
         </Link>
-
-        {showActions && (
-          <div>
-            <Link href={`/recipes/${recipe._id}/edit`}>Редагувати</Link>
-
-            <DeleteRecipeButton recipeId={recipe._id} />
-          </div>
-        )}
       </div>
     </article>
   );
