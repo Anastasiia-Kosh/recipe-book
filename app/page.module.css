@@ -1,8 +1,6 @@
 .hero {
   min-height: 760px;
-
   background-image: url("/images/home/hero-mobile.png");
-
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -62,11 +60,19 @@
   min-height: 50px;
   padding: 12px 26px;
 
-  background-color: var(--color-text);
-  color: var(--color-surface);
+  border: 1px solid var(--color-accent);
+  border-radius: 8px;
+
+  background-color: var(--color-accent);
+  color: #fff;
 
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
+
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
 }
 /* Tablet */
 @media screen and (min-width: 768px) {
@@ -108,5 +114,10 @@
   }
   .description {
     font-size: 24px;
+  }
+  .button:hover {
+    background-color: #944955;
+    border-color: #944955;
+    transform: translateY(-1px);
   }
 }

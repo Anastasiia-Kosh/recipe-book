@@ -10,7 +10,15 @@
   gap: 12px;
   margin-bottom: 28px;
 }
+.sectionLabel {
+  margin-bottom: 12px;
 
+  color: var(--color-accent);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
 .title {
   font-family: var(--font-serif);
   font-size: 32px;

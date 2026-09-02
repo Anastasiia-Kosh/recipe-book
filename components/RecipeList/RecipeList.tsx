@@ -8,6 +8,7 @@ import type { Recipe } from "@/types/recipe";
 import { useAuth } from "@/lib/store/authStore";
 import css from "./RecipeList.module.css";
 import toast from "react-hot-toast";
+import RecipesEmptyState from "../RecipesEmptyState/RecipesEmptyState";
 
 interface RecipeListProps {
   recipes: Recipe[];
@@ -54,7 +55,13 @@ export default function RecipeList({
   }, [isAuthenticated, user, clearIsAuthenticated]);
 
   if (recipes.length === 0) {
-    return <p className={css.empty}>Рецептів поки немає.</p>;
+    return   <RecipesEmptyState
+        image="/images/empty-states/my-recipes.png"
+        title="Рецептів в цій категорії поки немає"
+        description=""
+         linkHref="/recipes"
+    linkText="Переглянути усі категорії"
+      />;
   }
 
   return (

@@ -1,24 +1,135 @@
 .footer {
-  padding: 20px;
-  background-color: #f0f0f0;
-  text-align: center;
-  font-size: 14px;
-  color: #555;
-  border-top: 1px solid #ddd;
+  margin-top: auto;
+  padding-top: 32px;
+  padding-bottom: 24px;
+
+  border-top: 1px solid var(--color-border);
+
+  background-color: var(--color-surface);
+  color: var(--color-text);
 }
 
-.wrap {
+.content {
   display: flex;
-  justify-content: center;
-  gap: 20px;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.footer a {
-  color: #226ec5;
-  font-weight: 600;
-  text-decoration: none;
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.footer a:hover {
-  text-decoration: underline;
+.logo {
+  width: fit-content;
+
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.logo span {
+  color: var(--color-accent);
+}
+
+.description {
+  max-width: 320px;
+
+  color: var(--color-muted);
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navigation a {
+  color: var(--color-text);
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 180ms ease;
+}
+
+.navigation a:hover {
+  color: var(--color-accent);
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@media screen and (min-width: 768px) {
+  .footer {
+    padding-top: 40px;
+    padding-bottom: 28px;
+  }
+
+  .content {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .navigation {
+    gap: 28px;
+  }
+  .navigation a {
+    font-size: 17px;
+  }
+  .logo {
+    font-size: 30px;
+  }
+
+  .description {
+    font-size: 15px;
+  }
+
+  .bottom {
+    font-size: 15px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .footer {
+    padding-top: 48px;
+    padding-bottom: 32px;
+  }
+
+  .logo {
+    font-size: 32px;
+  }
+
+  .navigation {
+    gap: 36px;
+  }
+
+  .navigation a {
+    font-size: 18px;
+  }
+
+  .bottom {
+    margin-top: 22px;
+    padding-top: 22px;
+    font-size: 16px;
+  }
 }

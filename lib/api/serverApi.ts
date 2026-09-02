@@ -3,15 +3,22 @@ import { nextServerInstance } from "./api";
 import { User } from "@/types/user";
 import { Recipe } from "@/types/recipe";
 import { SavedRecipe } from "@/types/savedRecipe";
+import axios from "axios";
 
 export interface ServerSession {
   success: boolean;
 }
 export const checkSession = async () => {
   const cookiesData = await cookies();
-  const res = await nextServerInstance.get<ServerSession>(`/auth/session`, {
-    headers: { Cookie: cookiesData.toString() },
-  });
+    const res = await axios.post(
+    `${process.env.BACKEND_URL}/auth/refresh`,
+    null,
+    {
+      headers: {
+        Cookie: cookiesData.toString(),
+      },
+    },
+  );
   return res;
 };
 

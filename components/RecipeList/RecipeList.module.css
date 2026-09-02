@@ -17,9 +17,6 @@
   }
 }
 @media screen and (min-width: 1440px) {
-  .empty {
-    font-size: 18px;
-  }
   .list {
     row-gap: 32px;
   }

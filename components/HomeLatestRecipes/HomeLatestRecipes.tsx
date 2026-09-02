@@ -9,8 +9,10 @@ export default async function HomeLatestRecipes() {
     <section className={css.section}>
       <div className="container">
         <div className={css.header}>
+          <div>
+          <p className={css.sectionLabel}>Нові рецепти</p>
           <h2 className={css.title}>Останні рецепти</h2>
-
+</div>
           <Link href="/recipes" className={css.link}>
             Усі рецепти →
           </Link>
