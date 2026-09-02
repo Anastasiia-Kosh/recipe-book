@@ -1,7 +1,6 @@
 import Image from "next/image";
 import type { Recipe } from "@/types/recipe";
 import Link from "next/link";
-import DeleteRecipeButton from "../DeleteRecipeButton/DeleteRecipeButton";
 import SaveRecipeButton from "../SaveRecipeButton/SaveRecipeButton";
 import css from "./RecipeCard.module.css";
 

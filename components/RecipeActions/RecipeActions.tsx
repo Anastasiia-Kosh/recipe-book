@@ -30,6 +30,9 @@ export default function RecipeActions({
       const savedRecipes = await getSavedRecipes();
 
       const saved = savedRecipes.some((savedRecipe) => {
+          if (!savedRecipe.recipeId) {
+    return false;
+  }
         if (typeof savedRecipe.recipeId === "string") {
           return savedRecipe.recipeId === recipeId;
         }

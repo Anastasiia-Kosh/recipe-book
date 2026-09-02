@@ -10,23 +10,27 @@ import Image from "next/image";
 interface AuthNavigationProps {
   isMobile?: boolean;
   onCloseMobileMenu?: () => void;
-  pathname?: string;
+  pathname: string;
 }
 
 const AuthNavigation = ({
   isMobile = false,
   onCloseMobileMenu,
-   pathname,
+  pathname,
 }: AuthNavigationProps) => {
   const router = useRouter();
   const { isAuthenticated, user, clearIsAuthenticated } = useAuth();
 
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [menuPathname, setMenuPathname] = useState<string | null>(null);
+
+  const isUserMenuOpen = menuPathname === pathname;
+
   const handleMenu = () => {
-    setIsUserMenuOpen((prev) => !prev);
+    setMenuPathname((prev) => (prev === pathname ? null : pathname));
   };
+
   const handleCloseMenu = () => {
-    setIsUserMenuOpen(false);
+    setMenuPathname(null);
   };
 
   const handleLogout = async () => {
@@ -89,18 +93,23 @@ const AuthNavigation = ({
   return isAuthenticated && user ? (
     <>
       <li className={css.navigationItem}>
-     <Link
-  href="/recipes/create"
-  prefetch={false}
-  className={`${css.navigationLink} ${
-    pathname === "/recipes/create" ? css.activeLink : ""
-  }`}
->
-  Додати рецепт
-</Link>
+        <Link
+          href="/recipes/create"
+          prefetch={false}
+          className={`${css.navigationLink} ${
+            pathname === "/recipes/create" ? css.activeLink : ""
+          }`}
+        >
+          Додати рецепт
+        </Link>
       </li>
       <li className={css.userMenu}>
-        <button type="button" className={css.userButton} onClick={handleMenu}>
+        <button
+          type="button"
+          className={css.userButton}
+          onClick={handleMenu}
+          aria-expanded={isUserMenuOpen}
+        >
           <Image
             src={user.avatar}
             alt={user.username}
@@ -111,41 +120,42 @@ const AuthNavigation = ({
 
           <span>{user.username}</span>
         </button>
-      </li>
-      {isUserMenuOpen && (
-        <ul className={css.dropdown}>
-          <li className={css.userInfo}>
-            <strong>{user.username}</strong>
-            <span>{user.email}</span>
-          </li>
 
-          <li className={css.divider} />
-          <li>
-            <Link href="/profile" prefetch={false} onClick={handleCloseMenu}>
-              Профіль
-            </Link>
-          </li>
-          <li>
-            <Link href="/my-recipes" onClick={handleCloseMenu}>
-              Мої рецепти
-            </Link>
-          </li>
-          <li>
-            <Link href="/favorites" onClick={handleCloseMenu}>
-              Обрані рецепти
-            </Link>
-          </li>
-          <li>
-            <button
-              type="button"
-              className={css.dropdownLogout}
-              onClick={handleLogout}
-            >
-              Вийти
-            </button>
-          </li>
-        </ul>
-      )}
+        {isUserMenuOpen && (
+          <ul className={css.dropdown}>
+            <li className={css.userInfo}>
+              <strong>{user.username}</strong>
+              <span>{user.email}</span>
+            </li>
+
+            <li className={css.divider} />
+            <li>
+              <Link href="/profile" prefetch={false} onClick={handleCloseMenu}>
+                Профіль
+              </Link>
+            </li>
+            <li>
+              <Link href="/my-recipes" onClick={handleCloseMenu}>
+                Мої рецепти
+              </Link>
+            </li>
+            <li>
+              <Link href="/favorites" onClick={handleCloseMenu}>
+                Обрані рецепти
+              </Link>
+            </li>
+            <li>
+              <button
+                type="button"
+                className={css.dropdownLogout}
+                onClick={handleLogout}
+              >
+                Вийти
+              </button>
+            </li>
+          </ul>
+        )}
+      </li>
     </>
   ) : (
     <>

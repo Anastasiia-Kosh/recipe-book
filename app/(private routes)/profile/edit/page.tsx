@@ -7,7 +7,6 @@ import { updateAvatar, updateMe } from "@/lib/api/clientApi";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import SubmitButton from "@/components/SubmitButton/SubmitButton";
-import Loader from "@/components/Loader/Loader";
 import Link from "next/link";
 
 const ProfileEdit = () => {
@@ -15,24 +14,7 @@ const ProfileEdit = () => {
   const user = useAuth((store) => store.user);
   const setUser = useAuth((store) => store.setUser);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
-  const [isAvatarUploading, setIsAvatarUploading] = useState(false);
-
-  const handleEditUsername = async (formData: FormData) => {
-    const username = formData.get("username")?.toString().trim() ?? "";
-
-    try {
-      const updatedUser = await updateMe({ username });
-
-      setUser(updatedUser);
-
-      toast.success("Профіль оновлено");
-      router.push("/profile");
-    } catch (error) {
-      console.error("Failed to update profile:", error);
-
-      toast.error("Не вдалося оновити профіль");
-    }
-  };
+  const [selectedAvatar, setSelectedAvatar] = useState<File | null>(null);
 
   const handleAvatarChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -42,111 +24,109 @@ const ProfileEdit = () => {
     if (!file || !user) {
       return;
     }
-
+    if (avatarPreview) {
+      URL.revokeObjectURL(avatarPreview);
+    }
     const previewUrl = URL.createObjectURL(file);
 
     setAvatarPreview(previewUrl);
-    setIsAvatarUploading(true);
-
-    const formData = new FormData();
-    formData.append("avatar", file);
+    setSelectedAvatar(file);
+  };
+  const handleSaveProfile = async (formData: FormData) => {
+    const username = formData.get("username")?.toString().trim() ?? "";
 
     try {
-      const result = await updateAvatar(formData);
+      const avatarFormData = new FormData();
+
+      if (selectedAvatar) {
+        avatarFormData.append("avatar", selectedAvatar);
+      }
+
+      const [updatedUser, avatarResult] = await Promise.all([
+        updateMe({ username }),
+        selectedAvatar ? updateAvatar(avatarFormData) : Promise.resolve(null),
+      ]);
 
       setUser({
-        ...user,
-        avatar: result.url,
+        ...updatedUser,
+        avatar: avatarResult?.url ?? updatedUser.avatar,
       });
 
-      setAvatarPreview(null);
-      toast.success("Фото профілю оновлено");
+      toast.success("Профіль оновлено");
+      router.push("/profile");
     } catch (error) {
-      console.error("Failed to update avatar:", error);
-
-      setAvatarPreview(null);
-      toast.error("Не вдалося оновити фото");
-    } finally {
-      setIsAvatarUploading(false);
-      URL.revokeObjectURL(previewUrl);
-      event.target.value = "";
+      console.error("Failed to update profile:", error);
+      toast.error("Не вдалося оновити профіль");
     }
   };
   if (!user) {
-  return <p>Завантаження...</p>;
-}
-
-const currentUser = user;
+    return <p>Завантаження...</p>;
+  }
   return (
     <section className={css.page}>
       <div className="container">
-      <div className={css.profileCard}>
-        <h1 className={css.formTitle}>Редагувати профіль</h1>
+        <div className={css.profileCard}>
+          <h1 className={css.formTitle}>Редагувати профіль</h1>
 
-        <div className={css.avatarSection}>
-          <p className={css.label}>Фото профілю</p>
+          <div className={css.avatarSection}>
+            <p className={css.label}>Фото профілю</p>
 
-          <label htmlFor="avatar" className={css.avatarPicker}>
-            <Image
-              src={avatarPreview ?? currentUser.avatar}
-              alt="Фото профілю"
-              fill
-              className={css.avatar}
-              sizes="160px"
-            />
+            <label htmlFor="avatar" className={css.avatarPicker}>
+              <Image
+                src={avatarPreview ?? user.avatar}
+                alt="Фото профілю"
+                fill
+                className={css.avatar}
+                sizes="160px"
+              />
 
-            <div className={css.avatarOverlay}>
-              {isAvatarUploading ? (
-                <Loader size="small" />
-              ) : (
+              <div className={css.avatarOverlay}>
                 <span>✎ Змінити фото</span>
-              )}
-            </div>
-          </label>
-
-          <input
-            id="avatar"
-            name="avatar"
-            type="file"
-            accept="image/*"
-            onChange={handleAvatarChange}
-            disabled={isAvatarUploading}
-            className={css.hiddenFileInput}
-          />
-        </div>
-        <form className={css.profileInfo} action={handleEditUsername}>
-          <div className={css.field}>
-            <label htmlFor="username" className={css.label}>
-              Ім&apos;я користувача
+              </div>
             </label>
 
             <input
-              id="username"
-              name="username"
-              type="text"
-              defaultValue={currentUser.username}
-              required
-              className={css.input}
+              id="avatar"
+              name="avatar"
+              type="file"
+              accept="image/*"
+              onChange={handleAvatarChange}
+              className={css.hiddenFileInput}
             />
           </div>
+          <form className={css.profileInfo} action={handleSaveProfile}>
+            <div className={css.field}>
+              <label htmlFor="username" className={css.label}>
+                Ім&apos;я користувача
+              </label>
 
-          <div className={css.field}>
-            <p className={css.label}>Email</p>
-            <p className={css.email}>{currentUser.email}</p>
-          </div>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                defaultValue={user.username}
+                required
+                className={css.input}
+              />
+            </div>
 
-          <div className={css.actions}>
-            <SubmitButton pendingText="Зберігаємо...">
-              Зберегти зміни
-            </SubmitButton>
+            <div className={css.field}>
+              <p className={css.label}>Email</p>
+              <p className={css.email}>{user.email}</p>
+            </div>
 
-            <Link href="/profile" className={css.cancelButton}>
-              Скасувати
-            </Link>
-          </div>
-        </form>
+            <div className={css.actions}>
+              <SubmitButton pendingText="Зберігаємо...">
+                Зберегти зміни
+              </SubmitButton>
+
+              <Link href="/profile" className={css.cancelButton}>
+                Скасувати
+              </Link>
+            </div>
+          </form>
         </div>
-        </div>
+      </div>
     </section>
   );
 };
