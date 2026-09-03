@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useAuth } from "@/lib/store/authStore";
+import Icon from "@/components/Icon/Icon";
 
 interface EditRecipeLinkProps {
   recipeId: string;
@@ -20,6 +21,7 @@ export default function EditRecipeLink({
 
   return (
     <Link href={`/recipes/${recipeId}/edit`}>
+       <Icon name="edit" size={18} />
       Редагувати
     </Link>
   );

@@ -7,6 +7,7 @@ import {
 } from "@/lib/api/clientApi";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/store/authStore";
+import Icon from "@/components/Icon/Icon";
 
 interface SaveRecipeButtonProps {
   recipeId: string;
@@ -48,16 +49,28 @@ export default function SaveRecipeButton({
     setLocalSaved(true);
   }
 const buttonContent =
-  variant === "icon"
-    ? isSaved
-      ? "🔖"
-      : "♡"
-    : isSaved
-      ? "Обраний"
-      : "Додати в обране";
-  return (
-    <button type="button" onClick={handleClick}>
-     {buttonContent}
-    </button>
+  variant === "icon" ? (
+    <Icon name="bookmark" size={22} />
+  ) : isSaved ? (
+    "Обраний"
+  ) : (
+    "Додати в обране"
   );
+
+return (
+  <button
+    type="button"
+    onClick={handleClick}
+    aria-pressed={isSaved}
+    aria-label={
+      variant === "icon"
+        ? isSaved
+          ? "Прибрати з обраного"
+          : "Додати в обране"
+        : undefined
+    }
+  >
+    {buttonContent}
+  </button>
+);
 }

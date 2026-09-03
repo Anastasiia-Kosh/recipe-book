@@ -78,15 +78,12 @@
 
 .sectionTitle {
   margin-bottom: 24px;
-
   font-family: var(--font-serif);
   font-size: 28px;
   font-weight: 500;
   line-height: 1.15;
-
   color: var(--color-text);
 }
-
 .recipeText p {
   margin-bottom: 12px;
 }
@@ -132,6 +129,13 @@
   font-family: var(--font-serif);
   font-size: 22px;
   font-weight: 500;
+}
+.recipeText > p:last-child:empty,
+.recipeText > p:last-child:has(> br:only-child) {
+  display: none;
+}
+.recipeText > *:last-child {
+  margin-bottom: 0;
 }
 
 @media screen and (min-width: 768px) {

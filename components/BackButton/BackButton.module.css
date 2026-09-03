@@ -2,10 +2,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-
-  /* margin-top: 40px; */
   padding: 0;
-
   border: none;
   background: none;
 
@@ -14,9 +11,7 @@
   font-family: var(--font-sans);
   font-size: 14px;
   font-weight: 500;
-
   cursor: pointer;
-
   transition:
     color 200ms ease,
     transform 200ms ease;
@@ -27,20 +22,22 @@
   color: var(--color-accent);
 }
 
-.backButton:active {
+.backButton svg {
+  transition: transform 200ms ease;
+}
+
+.backButton:hover svg {
   transform: translateX(-2px);
 }
 
 @media screen and (min-width: 768px) {
   .backButton {
-    /* margin-top: 48px; */
     font-size: 15px;
   }
 }
 
 @media screen and (min-width: 1440px) {
   .backButton {
-    /* margin-top: 56px; */
     font-size: 16px;
   }
 }

@@ -3,6 +3,7 @@ import type { Recipe } from "@/types/recipe";
 import Link from "next/link";
 import SaveRecipeButton from "../SaveRecipeButton/SaveRecipeButton";
 import css from "./RecipeCard.module.css";
+import Icon from "../Icon/Icon";
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -44,6 +45,7 @@ export default function RecipeCard({
 
         <Link href={`/recipes/${recipe._id}`} className={css.detailsLink}>
           Переглянути рецепт
+          <Icon name="arrow-right" size={18} />
         </Link>
       </div>
     </article>

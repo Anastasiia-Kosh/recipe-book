@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Metadata } from "next";
 import { getMe, fetchMyRecipes, fetchSavedRecipes } from "@/lib/api/serverApi";
 import type { Recipe } from "@/types/recipe";
+import Icon from "@/components/Icon/Icon";
 
 export const metadata: Metadata = {
   title: "Профіль | RecipeBook",
@@ -53,7 +54,8 @@ const Profile = async () => {
 
           <div className={css.cardFooter}>
             <span className={css.count}>{recipes.length}</span>
-            <span className={css.cardLink}>Переглянути →</span>
+              <span className={css.cardLink}>Переглянути
+                <Icon name="arrow-right" size={18} /></span>
           </div>
         </Link>
 
@@ -69,7 +71,7 @@ const Profile = async () => {
             <span className={css.count}>
               {favoriteRecipes.length}
             </span>
-            <span className={css.cardLink}>Переглянути →</span>
+            <span className={css.cardLink}>Переглянути<Icon name="arrow-right" size={18} /></span>
           </div>
         </Link>
       </div>

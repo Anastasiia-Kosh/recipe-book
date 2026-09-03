@@ -3,6 +3,7 @@
 import ReactPaginate from "react-paginate";
 import css from "./Pagination.module.css";
 import { useRouter, useSearchParams } from "next/navigation";
+import Icon from "../Icon/Icon";
 
 interface PaginationProps {
   totalPages: number;
@@ -31,8 +32,8 @@ export default function Pagination({
       forcePage={currentPage - 1}
       containerClassName={css.pagination}
       activeClassName={css.active}
-      nextLabel="→"
-      previousLabel="←"
+      nextLabel={<Icon name="arrow-right" size={20} />}
+      previousLabel={<Icon name="arrow-left" size={20} />}
     />
   );
 }

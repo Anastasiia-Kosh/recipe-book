@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import css from "./HomeCategories.module.css";
 import { fetchCategoryCounts } from "@/lib/api/serverApi";
+import Icon from "../Icon/Icon";
 
 const homeCategories = [
   {
@@ -58,7 +59,7 @@ export default async function HomeCategories() {
           </div>
 
           <Link href="/recipes" className={css.link}>
-            Усі категорії →
+            Усі категорії<Icon name="arrow-right" size={22} />
           </Link>
         </div>
 
@@ -88,7 +89,7 @@ export default async function HomeCategories() {
         <div className={css.categoryInfo}>
             <h3>{category.title}</h3>
             <p className={css.recipeCount}>{count} {getRecipeWord(count)}</p>
-          <span aria-hidden="true">→</span>
+          <Icon name="arrow-right" size={22} />
         </div>
       </Link>
     </li>

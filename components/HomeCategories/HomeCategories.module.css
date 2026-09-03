@@ -34,6 +34,9 @@
   font-size: 14px;
   font-weight: 500;
   transition: color 200ms ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .categoryGrid {
@@ -80,7 +83,7 @@
 
 .categoryInfo {
   display: flex;
-  align-items: baseline;
+  align-items: flex-end;
   justify-content: space-between;
   padding: 18px 20px;
 }

@@ -6,6 +6,7 @@ import { useState } from "react";
 import css from "./DeleteRecipeButton.module.css";
 import Loader from "@/components/Loader/Loader";
 import toast from "react-hot-toast";
+import Icon from "@/components/Icon/Icon";
 
 interface DeleteRecipeButtonProps {
   recipeId: string;
@@ -36,6 +37,7 @@ toast.success("Рецепт видалено");
   return (
     <>
       <button type="button" onClick={() => setIsOpen(true)}>
+        <Icon name="trash" size={18} />
         Видалити
       </button>
       {isOpen && (

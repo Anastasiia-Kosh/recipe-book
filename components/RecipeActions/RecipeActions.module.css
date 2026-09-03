@@ -12,7 +12,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
+  gap: 8px;
   min-height: 42px;
   padding: 10px 16px;
 
@@ -31,7 +31,19 @@
     border-color 200ms ease,
     transform 200ms ease;
 }
+.actions svg {
+  transition: transform 200ms ease;
+}
 
+.editAction a:hover svg,
+.editAction a:focus-visible svg {
+  transform: rotate(-6deg);
+}
+
+.deleteAction > button:hover svg,
+.deleteAction > button:focus-visible svg {
+  transform: scale(1.08);
+}
 /* Додати в обране */
 
 .saveAction button {

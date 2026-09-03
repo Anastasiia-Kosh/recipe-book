@@ -2,6 +2,7 @@ import { fetchRecipes } from "@/lib/api/serverApi";
 import RecipeList from "@/components/RecipeList/RecipeList";
 import Link from "next/link";
 import css from "./HomeLatestRecipes.module.css"
+import Icon from "../Icon/Icon";
 
 export default async function HomeLatestRecipes() {
   const { recipes } = await fetchRecipes({ page: 1, perPage: 6 });
@@ -14,7 +15,7 @@ export default async function HomeLatestRecipes() {
           <h2 className={css.title}>Останні рецепти</h2>
 </div>
           <Link href="/recipes" className={css.link}>
-            Усі рецепти →
+            Усі рецепти<Icon name="arrow-right" size={22} />
           </Link>
         </div>
 

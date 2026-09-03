@@ -4,12 +4,10 @@ export type IconName =
   | "camera"
   | "pencil"
   | "bookmark"
-  | "ingredients"
-  | "preparation"
   | "trash"
   | "edit"
-  | "back"
-  | "logo";
+  | "arrow-right"
+  | "arrow-left";
 
 interface IconProps {
   name: IconName;
@@ -17,11 +15,7 @@ interface IconProps {
   className?: string;
 }
 
-export default function Icon({
-  name,
-  size = 24,
-  className = "",
-}: IconProps) {
+export default function Icon({ name, size = 24, className = "" }: IconProps) {
   return (
     <svg
       className={`${css.icon} ${className}`}

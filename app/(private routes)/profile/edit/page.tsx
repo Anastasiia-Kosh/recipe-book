@@ -63,10 +63,10 @@ const ProfileEdit = () => {
   };
   if (!user) {
     return (
-    <div className={css.loading}>
-      <Loader />
-    </div>
-  );
+      <div className={css.loading}>
+        <Loader />
+      </div>
+    );
   }
   return (
     <section className={css.page}>
@@ -88,9 +88,9 @@ const ProfileEdit = () => {
 
               <div className={css.avatarOverlay}>
                 <span className={css.changePhoto}>
-  <Icon name="pencil" size={18} />
-  Змінити фото
-</span>
+                  <Icon name="pencil" size={18} />
+                  Змінити фото
+                </span>
               </div>
             </label>
 
