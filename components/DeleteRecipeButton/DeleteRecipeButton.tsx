@@ -24,14 +24,14 @@ export default function DeleteRecipeButton({
       setIsDeleting(true);
 
       await deleteRecipe(recipeId);
-toast.success("Рецепт видалено");
+      toast.success("Рецепт видалено");
       router.push("/recipes");
     } catch (error) {
-    console.error(error);
-    toast.error("Не вдалося видалити рецепт");
-  } finally {
-    setIsDeleting(false);
-  }
+      console.error(error);
+      toast.error("Не вдалося видалити рецепт");
+    } finally {
+      setIsDeleting(false);
+    }
   }
 
   return (
@@ -44,11 +44,17 @@ toast.success("Рецепт видалено");
         <div className={css.overlay} onClick={() => setIsOpen(false)}>
           <div
             className={css.modal}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delete-recipe-title"
+            aria-describedby="delete-recipe-description"
             onClick={(event) => event.stopPropagation()}
           >
-            <h2 className={css.title}>Видалити рецепт?</h2>
+            <h2 id="delete-recipe-title" className={css.title}>
+              Видалити рецепт?
+            </h2>
 
-            <p className={css.text}>
+            <p id="delete-recipe-description" className={css.text}>
               Ви впевнені, що хочете видалити цей рецепт? Цю дію неможливо
               скасувати.
             </p>

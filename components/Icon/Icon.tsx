@@ -7,7 +7,9 @@ export type IconName =
   | "trash"
   | "edit"
   | "arrow-right"
-  | "arrow-left";
+  | "arrow-left"
+  | "menu"
+  | "close";
 
 interface IconProps {
   name: IconName;
