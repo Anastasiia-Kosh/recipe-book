@@ -8,6 +8,8 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import SubmitButton from "@/components/SubmitButton/SubmitButton";
 import Link from "next/link";
+import Loader from "@/components/Loader/Loader";
+import Icon from "@/components/Icon/Icon";
 
 const ProfileEdit = () => {
   const router = useRouter();
@@ -60,7 +62,11 @@ const ProfileEdit = () => {
     }
   };
   if (!user) {
-    return <p>Завантаження...</p>;
+    return (
+    <div className={css.loading}>
+      <Loader />
+    </div>
+  );
   }
   return (
     <section className={css.page}>
@@ -81,7 +87,10 @@ const ProfileEdit = () => {
               />
 
               <div className={css.avatarOverlay}>
-                <span>✎ Змінити фото</span>
+                <span className={css.changePhoto}>
+  <Icon name="pencil" size={18} />
+  Змінити фото
+</span>
               </div>
             </label>
 

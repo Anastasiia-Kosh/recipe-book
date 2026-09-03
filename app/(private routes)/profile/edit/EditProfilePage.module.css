@@ -65,7 +65,12 @@
 
   transition: opacity 180ms ease;
 }
-
+.changePhoto {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
 .avatarPicker:hover .avatarOverlay {
   opacity: 1;
 }
@@ -174,6 +179,12 @@
 .cancelButton:hover {
   border-color: var(--color-accent);
   color: var(--color-accent);
+}
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
 }
 @media screen and (min-width: 768px) {
   .page {

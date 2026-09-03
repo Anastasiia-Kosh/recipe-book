@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import SubmitButton from "../SubmitButton/SubmitButton";
+import Icon from "../Icon/Icon";
 
 interface RecipeFormProps {
   recipe?: Recipe;
@@ -70,13 +71,13 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
                 />
 
                 <div className={css.photoOverlay}>
-                  <span className={css.editIcon}>✎</span>
+                  <Icon name="pencil" size={20} />
                   <span>Змінити фото</span>
                 </div>
               </>
             ) : (
               <div className={css.photoPlaceholder}>
-                <span className={css.cameraIcon}>📷</span>
+                <Icon name="camera" size={20} />
                 <span className={css.placeholderTitle}>Додати фото</span>
                 <span className={css.placeholderText}>
                   Натисніть, щоб вибрати файл

@@ -4,6 +4,7 @@ import css from "./page.module.css";
 import HomeCategories from "@/components/HomeCategories/HomeCategories";
 import HomeLatestRecipes from "@/components/HomeLatestRecipes/HomeLatestRecipes";
 
+
 export default function Home() {
   return (
     <>

@@ -1,0 +1,139 @@
+.page {
+  display: flex;
+  align-items: center;
+
+  min-height: 60vh;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.content {
+  max-width: 680px;
+  margin: 0 auto;
+
+  text-align: center;
+}
+
+.code {
+  margin-bottom: 12px;
+
+  color: var(--color-accent);
+
+  font-family: var(--font-serif);
+  font-size: 72px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.title {
+  margin-bottom: 18px;
+
+  color: var(--color-text);
+
+  font-family: var(--font-serif);
+  font-size: 38px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.description {
+  max-width: 520px;
+  margin: 0 auto 28px;
+
+  color: var(--color-muted);
+
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  align-items: center;
+}
+
+.primaryLink,
+.secondaryLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 48px;
+  padding: 11px 20px;
+
+  border-radius: 8px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.primaryLink {
+  border: 1px solid var(--color-accent);
+
+  background-color: var(--color-accent);
+  color: #fff;
+}
+
+.primaryLink:hover {
+  background-color: #944955;
+  border-color: #944955;
+}
+
+.secondaryLink {
+  border: 1px solid var(--color-border);
+
+  background-color: transparent;
+  color: var(--color-text);
+}
+
+.secondaryLink:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+@media screen and (min-width: 768px) {
+  .page {
+    min-height: 65vh;
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
+  .code {
+    font-size: 96px;
+  }
+
+  .title {
+    font-size: 48px;
+  }
+
+  .description {
+    font-size: 18px;
+  }
+
+  .actions {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .primaryLink,
+  .secondaryLink {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .code {
+    font-size: 112px;
+  }
+
+  .title {
+    font-size: 56px;
+  }
+}
