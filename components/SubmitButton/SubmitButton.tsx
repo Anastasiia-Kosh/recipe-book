@@ -6,19 +6,25 @@ interface SubmitButtonProps {
   children: string;
   pendingText: string;
   fullWidth?: boolean;
-    disabled?: boolean;
+  disabled?: boolean;
+  isPending?: boolean;
 }
 
 export default function SubmitButton({
   children,
   pendingText,
   fullWidth = false,
-    disabled = false,
+  disabled = false,
+  isPending,
 }: SubmitButtonProps) {
-  const { pending } = useFormStatus();
-
-   return (
-    <button type="submit" disabled={pending || disabled}  className={`${css.button} ${fullWidth ? css.fullWidth : ""}`}>
+  const { pending: formPending } = useFormStatus();
+  const pending = isPending ?? formPending;
+  return (
+    <button
+      type="submit"
+      disabled={pending || disabled}
+      className={`${css.button} ${fullWidth ? css.fullWidth : ""}`}
+    >
       {pending ? (
         <>
           <Loader size="small" />

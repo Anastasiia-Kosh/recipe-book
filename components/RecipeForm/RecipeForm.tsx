@@ -27,6 +27,7 @@ function hasTextContent(html: string) {
 export default function RecipeForm({ recipe }: RecipeFormProps) {
   const router = useRouter();
   const [imagePreview, setImagePreview] = useState(recipe?.image ?? "");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -51,24 +52,25 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
 
     reader.readAsDataURL(file);
   }
-  function handleValidate(event: React.FormEvent<HTMLFormElement>) {
-  const formData = new FormData(event.currentTarget);
 
-  const ingredients = formData.get("ingredients")?.toString() ?? "";
-  const instructions = formData.get("instructions")?.toString() ?? "";
-
-  if (!hasTextContent(ingredients)) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    toast.error("Додайте інгредієнти");
-    return;
-  }
+    const formData = new FormData(event.currentTarget);
 
-  if (!hasTextContent(instructions)) {
-    event.preventDefault();
-    toast.error("Додайте спосіб приготування");
-  }
-}
-  async function handleSubmit(formData: FormData) {
+    const ingredients = formData.get("ingredients")?.toString() ?? "";
+    const instructions = formData.get("instructions")?.toString() ?? "";
+
+    if (!hasTextContent(ingredients)) {
+      toast.error("Додайте інгредієнти");
+      return;
+    }
+
+    if (!hasTextContent(instructions)) {
+      toast.error("Додайте спосіб приготування");
+      return;
+    }
+
+    setIsSubmitting(true);
     try {
       if (recipe) {
         const updatedRecipe = await updateRecipe(recipe._id, formData);
@@ -85,11 +87,12 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
       toast.error(
         recipe ? "Не вдалося оновити рецепт" : "Не вдалося створити рецепт",
       );
+    } finally {
+      setIsSubmitting(false);
     }
   }
-
   return (
-    <form action={handleSubmit} onSubmit={handleValidate} className={css.form}>
+    <form onSubmit={handleSubmit} className={css.form}>
       <div className={css.topFields}>
         <div className={css.photoField}>
           <p className={css.label}>Фото</p>
@@ -208,7 +211,10 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
 
       <div className={css.submitWrapper}>
         {
-          <SubmitButton pendingText={recipe ? "Зберігаємо..." : "Створюємо..."}>
+          <SubmitButton
+            pendingText={recipe ? "Зберігаємо..." : "Створюємо..."}
+            isPending={isSubmitting}
+          >
             {recipe ? "Зберегти зміни" : "Створити рецепт"}
           </SubmitButton>
         }
