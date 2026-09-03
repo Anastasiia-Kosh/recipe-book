@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import Icon from "../Icon/Icon";
 import { validateImageFile } from "@/lib/utils/validateImageFile";
+import { isAxiosError } from "axios";
 
 interface RecipeFormProps {
   recipe?: Recipe;
@@ -85,9 +86,21 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
       router.push(`/recipes/${createdRecipe._id}`);
     } catch (error) {
       console.error("Failed to save recipe:", error);
-      toast.error(
-        recipe ? "Не вдалося оновити рецепт" : "Не вдалося створити рецепт",
-      );
+
+      if (isAxiosError(error)) {
+        toast.error(
+          `Помилка: ${error.message}
+Code: ${error.code ?? "немає"}
+Status: ${error.response?.status ?? "немає"}`,
+          {
+            duration: 10000,
+          },
+        );
+
+        return;
+      }
+
+      toast.error("Невідома помилка при створенні рецепта");
     } finally {
       setIsSubmitting(false);
     }
