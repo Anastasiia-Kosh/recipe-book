@@ -7,26 +7,35 @@ import { useState } from "react";
 import Link from "next/link";
 import SubmitButton from "@/components/SubmitButton/SubmitButton";
 import Image from "next/image";
+import { isAxiosError } from "axios";
 
 const SignUp = () => {
   const router = useRouter();
   const [error, setError] = useState("");
   const setAuth = useAuth((store) => store.setUser);
   const handleRegister = async (action: FormData) => {
+    setError("");
+
     try {
-      const loginData: RegisterRequest = {
+      const registerData: RegisterRequest = {
         email: action.get("email") as string,
         password: action.get("password") as string,
       };
-      const user = await register(loginData);
-      if (user) {
-        setAuth(user);
-        router.push("/profile");
-      } else {
-        setError("Invalid email or password");
+
+      const user = await register(registerData);
+
+      setAuth(user);
+      router.push("/profile");
+    } catch (error) {
+      if (
+        isAxiosError(error) &&
+        error.response?.data?.message === "Email in use"
+      ) {
+        setError("Користувач з таким email уже існує.");
+        return;
       }
-    } catch {
-      setError("Oops... some error");
+
+      setError("Не вдалося зареєструватися. Спробуйте ще раз.");
     }
   };
 
@@ -46,7 +55,7 @@ const SignUp = () => {
                 id="email"
                 type="email"
                 name="email"
-                 autoComplete="email"
+                autoComplete="email"
                 className={css.input}
                 required
               />
@@ -67,6 +76,8 @@ const SignUp = () => {
               />
             </div>
 
+            {error && <p className={css.error}>{error}</p>}
+            
             <SubmitButton pendingText="Реєструємо..." fullWidth>
               Зареєструватися
             </SubmitButton>
@@ -77,7 +88,7 @@ const SignUp = () => {
                 Увійти
               </Link>
             </p>
- <div className={css.imageWrapper}>
+            <div className={css.imageWrapper}>
               <Image
                 src="/images/auth/sing-up2.png"
                 alt=""
@@ -87,7 +98,6 @@ const SignUp = () => {
                 sizes="(min-width: 768px) 40vw, 80vw"
               />
             </div>
-            {error && <p className={css.error}>{error}</p>}
           </form>
         </div>
       </div>

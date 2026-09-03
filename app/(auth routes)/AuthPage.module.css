@@ -86,12 +86,12 @@
 }
 
 .error {
+  margin: -4px 0 4px;
   color: #a65353;
-
   font-size: 14px;
   line-height: 1.4;
-  text-align: center;
 }
+
 .imageWrapper {
   position: relative;
 

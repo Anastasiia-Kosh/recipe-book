@@ -7,26 +7,35 @@ import { useState } from "react";
 import Link from "next/link";
 import SubmitButton from "@/components/SubmitButton/SubmitButton";
 import Image from "next/image";
+import { isAxiosError } from "axios";
 
 const SignIn = () => {
   const router = useRouter();
   const [error, setError] = useState("");
   const setAuth = useAuth((store) => store.setUser);
   const handleLogin = async (action: FormData) => {
+    setError("");
+
     try {
       const loginData: LoginRequest = {
         email: action.get("email") as string,
         password: action.get("password") as string,
       };
+
       const user = await login(loginData);
-      if (user) {
-        setAuth(user);
-        router.push("/profile");
-      } else {
-        setError("Invalid email or password");
+
+      setAuth(user);
+      router.push("/profile");
+    } catch (error) {
+      if (
+        isAxiosError(error) &&
+        error.response?.data?.message === "Invalid credentials"
+      ) {
+        setError("Неправильний email або пароль.");
+        return;
       }
-    } catch {
-      setError("Oops... some error");
+
+      setError("Не вдалося увійти. Спробуйте ще раз.");
     }
   };
   return (
@@ -45,7 +54,7 @@ const SignIn = () => {
                 id="email"
                 type="email"
                 name="email"
-                 autoComplete="email"
+                autoComplete="email"
                 className={css.input}
                 required
               />
@@ -66,7 +75,11 @@ const SignIn = () => {
               />
             </div>
 
-            <SubmitButton pendingText="Входимо..." fullWidth>Увійти</SubmitButton>
+            {error && <p className={css.error}>{error}</p>}
+            
+            <SubmitButton pendingText="Входимо..." fullWidth>
+              Увійти
+            </SubmitButton>
 
             <p className={css.switchText}>
               Ще не маєте акаунта?{" "}
@@ -84,7 +97,6 @@ const SignIn = () => {
                 sizes="(min-width: 768px) 40vw, 80vw"
               />
             </div>
-            {error && <p className={css.error}>{error}</p>}
           </form>
         </div>
       </div>
