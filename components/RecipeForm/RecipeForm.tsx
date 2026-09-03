@@ -10,20 +10,37 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import Icon from "../Icon/Icon";
+import { validateImageFile } from "@/lib/utils/validateImageFile";
 
 interface RecipeFormProps {
   recipe?: Recipe;
 }
+function hasTextContent(html: string) {
+  return (
+    html
+      .replace(/<[^>]*>/g, "")
+      .replace(/&nbsp;/g, " ")
+      .trim().length > 0
+  );
+}
+
 export default function RecipeForm({ recipe }: RecipeFormProps) {
   const router = useRouter();
   const [imagePreview, setImagePreview] = useState(recipe?.image ?? "");
+
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
 
     if (!file) {
       return;
     }
+    const errorMessage = validateImageFile(file);
 
+    if (errorMessage) {
+      toast.error(errorMessage);
+      event.target.value = "";
+      return;
+    }
     const reader = new FileReader();
 
     reader.onload = () => {
@@ -34,6 +51,23 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
 
     reader.readAsDataURL(file);
   }
+  function handleValidate(event: React.FormEvent<HTMLFormElement>) {
+  const formData = new FormData(event.currentTarget);
+
+  const ingredients = formData.get("ingredients")?.toString() ?? "";
+  const instructions = formData.get("instructions")?.toString() ?? "";
+
+  if (!hasTextContent(ingredients)) {
+    event.preventDefault();
+    toast.error("Додайте інгредієнти");
+    return;
+  }
+
+  if (!hasTextContent(instructions)) {
+    event.preventDefault();
+    toast.error("Додайте спосіб приготування");
+  }
+}
   async function handleSubmit(formData: FormData) {
     try {
       if (recipe) {
@@ -55,7 +89,7 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
   }
 
   return (
-    <form action={handleSubmit} className={css.form}>
+    <form action={handleSubmit} onSubmit={handleValidate} className={css.form}>
       <div className={css.topFields}>
         <div className={css.photoField}>
           <p className={css.label}>Фото</p>
@@ -90,7 +124,7 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
             id="image"
             name="image"
             type="file"
-            accept="image/*"
+            accept="image/jpeg,image/png,image/webp,image/gif"
             required={!recipe}
             onChange={handleImageChange}
             className={css.hiddenFileInput}
@@ -133,6 +167,7 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
               type="text"
               defaultValue={recipe?.title ?? ""}
               required
+              maxLength={120}
               className={css.input}
             />
           </div>
@@ -147,6 +182,7 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
               name="shortDescription"
               defaultValue={recipe?.shortDescription ?? ""}
               required
+              maxLength={500}
               className={css.textarea}
             />
           </div>

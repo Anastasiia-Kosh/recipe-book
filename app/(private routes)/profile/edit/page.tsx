@@ -10,6 +10,7 @@ import SubmitButton from "@/components/SubmitButton/SubmitButton";
 import Link from "next/link";
 import Loader from "@/components/Loader/Loader";
 import Icon from "@/components/Icon/Icon";
+import { validateImageFile } from "@/lib/utils/validateImageFile";
 
 const ProfileEdit = () => {
   const router = useRouter();
@@ -24,6 +25,13 @@ const ProfileEdit = () => {
     const file = event.target.files?.[0];
 
     if (!file || !user) {
+      return;
+    }
+    const errorMessage = validateImageFile(file);
+
+    if (errorMessage) {
+      toast.error(errorMessage);
+      event.target.value = "";
       return;
     }
     if (avatarPreview) {
@@ -98,7 +106,7 @@ const ProfileEdit = () => {
               id="avatar"
               name="avatar"
               type="file"
-              accept="image/*"
+              accept="image/jpeg,image/png,image/webp,image/gif"
               onChange={handleAvatarChange}
               className={css.hiddenFileInput}
             />
@@ -115,6 +123,8 @@ const ProfileEdit = () => {
                 type="text"
                 defaultValue={user.username}
                 required
+                minLength={2}
+  maxLength={50}
                 className={css.input}
               />
             </div>

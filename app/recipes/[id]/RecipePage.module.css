@@ -216,8 +216,8 @@
     display: grid;
     grid-template-columns: minmax(0, 0.55fr) minmax(0, 1.45fr);
     gap: 56px;
-
     padding-top: 48px;
+    padding-bottom: 48px;
   }
 
   .recipeColumn {
