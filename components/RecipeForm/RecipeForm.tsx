@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import RichTextEditor from "@/components/RichTextEditor/RichTextEditor";
 import css from "./RecipeForm.module.css";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import Icon from "../Icon/Icon";
@@ -19,7 +19,8 @@ function hasTextContent(html: string) {
   return (
     html
       .replace(/<[^>]*>/g, "")
-      .replace(/&nbsp;/g, " ")
+      .replace(/&nbsp;|&#160;/gi, " ")
+      .replace(/\u00a0/g, " ")
       .trim().length > 0
   );
 }
@@ -28,7 +29,13 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
   const router = useRouter();
   const [imagePreview, setImagePreview] = useState(recipe?.image ?? "");
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  useEffect(() => {
+    return () => {
+      if (imagePreview.startsWith("blob:")) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
 
@@ -42,15 +49,9 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
       event.target.value = "";
       return;
     }
-    const reader = new FileReader();
+    const previewUrl = URL.createObjectURL(file);
 
-    reader.onload = () => {
-      if (typeof reader.result === "string") {
-        setImagePreview(reader.result);
-      }
-    };
-
-    reader.readAsDataURL(file);
+    setImagePreview(previewUrl);
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -210,14 +211,12 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
       </div>
 
       <div className={css.submitWrapper}>
-        {
-          <SubmitButton
-            pendingText={recipe ? "Зберігаємо..." : "Створюємо..."}
-            isPending={isSubmitting}
-          >
-            {recipe ? "Зберегти зміни" : "Створити рецепт"}
-          </SubmitButton>
-        }
+        <SubmitButton
+          pendingText={recipe ? "Зберігаємо..." : "Створюємо..."}
+          isPending={isSubmitting}
+        >
+          {recipe ? "Зберегти зміни" : "Створити рецепт"}
+        </SubmitButton>
       </div>
     </form>
   );
