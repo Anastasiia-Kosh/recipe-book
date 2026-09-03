@@ -15,10 +15,45 @@ const playfair = Playfair_Display({
   subsets: ["latin", "cyrillic"],
   variable: "--font-serif",
 });
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 export const metadata: Metadata = {
-  title: "RecipeBook",
-  description: "Моя книга рецептів",
+  metadataBase: new URL(siteUrl),
+
+  title: {
+    default: "RecipeBook — домашні рецепти",
+    template: "%s | RecipeBook",
+  },
+
+  description:
+    "Перевірені домашні рецепти випічки, десертів та улюблених страв, які хочеться готувати знову.",
+
+  applicationName: "RecipeBook",
+
+  openGraph: {
+    type: "website",
+    locale: "uk_UA",
+    siteName: "RecipeBook",
+    title: "RecipeBook — домашні рецепти",
+    description:
+      "Перевірені домашні рецепти випічки, десертів та улюблених страв, які хочеться готувати знову.",
+    url: siteUrl,
+    images: [
+    {
+      url: "/images/og/recipe-book-og.jpg",
+      width: 1200,
+      height: 630,
+      alt: "RecipeBook — домашні рецепти",
+    },
+  ],
+  },
+  twitter: {
+  card: "summary_large_image",
+  title: "RecipeBook — домашні рецепти",
+  description:
+    "Перевірені домашні рецепти випічки, десертів та улюблених страв, які хочеться готувати знову.",
+  images: ["/images/og/recipe-book-og.jpg"],
+},
 };
 
 export default function RootLayout({

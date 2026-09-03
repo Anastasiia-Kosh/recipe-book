@@ -7,7 +7,7 @@ import type { Recipe } from "@/types/recipe";
 import Icon from "@/components/Icon/Icon";
 
 export const metadata: Metadata = {
-  title: "Профіль | RecipeBook",
+  title: "Профіль",
   description: "Особистий профіль користувача RecipeBook",
 };
 

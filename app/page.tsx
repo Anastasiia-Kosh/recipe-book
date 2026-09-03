@@ -1,9 +1,30 @@
-
 import Link from "next/link";
 import css from "./page.module.css";
 import HomeCategories from "@/components/HomeCategories/HomeCategories";
 import HomeLatestRecipes from "@/components/HomeLatestRecipes/HomeLatestRecipes";
+import type { Metadata } from "next";
 
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/",
+  },
+
+  openGraph: {
+    type: "website",
+    url: "/",
+    title: "RecipeBook — домашні рецепти",
+    description:
+      "Перевірені домашні рецепти випічки, десертів та улюблених страв, які хочеться готувати знову.",
+    images: [
+      {
+        url: "/images/og/recipe-book-og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "RecipeBook — домашні рецепти",
+      },
+    ],
+  },
+}
 
 export default function Home() {
   return (

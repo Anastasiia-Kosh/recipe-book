@@ -3,7 +3,7 @@ import css from "./not-found.module.css";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Сторінку не знайдено | RecipeBook",
+  title: "Сторінку не знайдено",
   description: "Запитану сторінку не знайдено.",
 };
 
