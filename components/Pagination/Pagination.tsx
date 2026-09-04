@@ -16,6 +16,19 @@ export default function Pagination({
 }: PaginationProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  if (totalPages <= 1) {
+    return null;
+  }
+
+  const safeCurrentPage = Math.min(
+    Math.max(currentPage, 1),
+    totalPages,
+  );
+
+
+
+
   const handlePageChange = (nextPage: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", nextPage.toString());
@@ -29,7 +42,7 @@ export default function Pagination({
       pageRangeDisplayed={4}
       marginPagesDisplayed={1}
       onPageChange={({ selected }) => handlePageChange(selected + 1)}
-      forcePage={currentPage - 1}
+      forcePage={safeCurrentPage  - 1}
       containerClassName={css.pagination}
       activeClassName={css.active}
       nextLabel={<Icon name="arrow-right" size={20} />}

@@ -1,4 +1,4 @@
-const MAX_IMAGE_SIZE = 10 * 1024 * 1024;
+const MAX_IMAGE_SIZE = 4 * 1024 * 1024;
 
 const ALLOWED_IMAGE_TYPES = [
   "image/jpeg",
@@ -13,7 +13,7 @@ export function validateImageFile(file: File): string | null {
   }
 
   if (file.size > MAX_IMAGE_SIZE) {
-    return "Розмір зображення не повинен перевищувати 10 МБ";
+    return "Розмір зображення не повинен перевищувати 4 МБ";
   }
 
   return null;

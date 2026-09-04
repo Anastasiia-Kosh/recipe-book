@@ -14,12 +14,14 @@ interface RecipeListProps {
   recipes: Recipe[];
   search?: string;
   refreshAfterChange?: boolean;
+  initialSavedRecipes?: SavedRecipe[];
 }
 
 export default function RecipeList({
   recipes,
   search,
   refreshAfterChange = false,
+  initialSavedRecipes = [],
 }: RecipeListProps) {
   const user = useAuth((store) => store.user);
   const isAuthenticated = useAuth((store) => store.isAuthenticated);
@@ -33,7 +35,9 @@ export default function RecipeList({
     }
   }, [search, recipes.length]);
 
-  const [savedRecipes, setSavedRecipes] = useState<SavedRecipe[]>([]);
+  const [savedRecipes, setSavedRecipes] =
+    useState<SavedRecipe[]>(initialSavedRecipes);
+
   useEffect(() => {
     if (!isAuthenticated || !user) {
       return;
@@ -55,31 +59,30 @@ export default function RecipeList({
   }, [isAuthenticated, user, clearIsAuthenticated]);
 
   if (recipes.length === 0) {
-    return   <RecipesEmptyState
+    return (
+      <RecipesEmptyState
         image="/images/empty-states/my-recipes.png"
         title="Рецептів в цій категорії поки немає"
         description=""
-         linkHref="/recipes"
-    linkText="Переглянути усі категорії"
-      />;
+        linkHref="/recipes"
+        linkText="Переглянути усі категорії"
+      />
+    );
   }
 
   return (
     <ul className={css.list}>
       {recipes.map((recipe) => {
-        const isSaved =
-          isAuthenticated &&
-          !!user &&
-          savedRecipes.some((savedRecipe) => {
-            if (!savedRecipe.recipeId) {
-              return false;
-            }
-            if (typeof savedRecipe.recipeId === "string") {
-              return savedRecipe.recipeId === recipe._id;
-            }
+        const isSaved = savedRecipes.some((savedRecipe) => {
+          if (!savedRecipe.recipeId) {
+            return false;
+          }
+          if (typeof savedRecipe.recipeId === "string") {
+            return savedRecipe.recipeId === recipe._id;
+          }
 
-            return savedRecipe.recipeId._id === recipe._id;
-          });
+          return savedRecipe.recipeId._id === recipe._id;
+        });
         return (
           <li key={recipe._id} className={css.item}>
             <RecipeCard
