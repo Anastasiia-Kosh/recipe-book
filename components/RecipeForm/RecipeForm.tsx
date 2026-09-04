@@ -30,6 +30,8 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
   const router = useRouter();
   const [imagePreview, setImagePreview] = useState(recipe?.image ?? "");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+
   useEffect(() => {
     return () => {
       if (imagePreview.startsWith("blob:")) {
@@ -37,7 +39,8 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
       }
     };
   }, [imagePreview]);
-  function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
+
+  async function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
 
     if (!file) {
@@ -50,15 +53,46 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
       event.target.value = "";
       return;
     }
-    const previewUrl = URL.createObjectURL(file);
+    try {
+      const buffer = await file.arrayBuffer();
 
-    setImagePreview(previewUrl);
+      const stableFile = new File(
+        [buffer],
+        file.name || `recipe-image-${Date.now()}.jpg`,
+        {
+          type: file.type,
+          lastModified: file.lastModified,
+        },
+      );
+
+      const previewUrl = URL.createObjectURL(stableFile);
+
+      setSelectedImage(stableFile);
+      setImagePreview(previewUrl);
+    } catch (error) {
+      console.error("Failed to read image:", error);
+
+      setSelectedImage(null);
+      event.target.value = "";
+
+      toast.error("Не вдалося прочитати фото. Спробуйте вибрати його ще раз.");
+    }
   }
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(
+    event: React.SyntheticEvent<HTMLFormElement, SubmitEvent>,
+  ) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
+    formData.delete("image");
 
+    if (selectedImage) {
+      formData.append("image", selectedImage);
+    }
+    if (!recipe && !selectedImage) {
+      toast.error("Додайте фото");
+      return;
+    }
     const ingredients = formData.get("ingredients")?.toString() ?? "";
     const instructions = formData.get("instructions")?.toString() ?? "";
 
@@ -90,8 +124,8 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
       if (isAxiosError(error)) {
         toast.error(
           `Помилка: ${error.message}
-Code: ${error.code ?? "немає"}
-Status: ${error.response?.status ?? "немає"}`,
+           Code: ${error.code ?? "немає"}
+           Status: ${error.response?.status ?? "немає"}`,
           {
             duration: 10000,
           },
@@ -118,6 +152,7 @@ Status: ${error.response?.status ?? "немає"}`,
                   src={imagePreview}
                   alt="Попередній перегляд фото рецепта"
                   fill
+                  unoptimized
                   className={css.previewImage}
                 />
 
