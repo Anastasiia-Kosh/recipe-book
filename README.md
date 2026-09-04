@@ -4,7 +4,7 @@ RecipeBook is a full-stack recipe application built with Next.js and React.
 
 It is designed as a personal recipe collection with authentication, recipe management, favorites, rich-text recipe editing, search, filtering, pagination, responsive layouts, and SEO support.
 
-![RecipeBook home page](./public/readme/recipe-book-home.jpg)
+![RecipeBook home page](./public/readme/recipe-book-home.webp)
 
 ## Live Demo
 
