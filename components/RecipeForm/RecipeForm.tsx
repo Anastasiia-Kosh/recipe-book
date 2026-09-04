@@ -75,7 +75,15 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
       setSelectedImage(null);
       event.target.value = "";
 
-      toast.error("Не вдалося прочитати фото. Спробуйте вибрати його ще раз.");
+      // toast.error("Не вдалося прочитати фото. Спробуйте вибрати його ще раз.");
+      const message =
+        error instanceof Error
+          ? `${error.name}: ${error.message}`
+          : "Невідома помилка";
+
+      toast.error(message, {
+        duration: 10000,
+      });
     }
   }
 
