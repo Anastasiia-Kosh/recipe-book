@@ -37,10 +37,36 @@ const ProfileEdit = () => {
     if (avatarPreview) {
       URL.revokeObjectURL(avatarPreview);
     }
-    const previewUrl = URL.createObjectURL(file);
+    try {
+      const buffer = await file.arrayBuffer();
 
-    setAvatarPreview(previewUrl);
-    setSelectedAvatar(file);
+      const stableFile = new File(
+        [buffer],
+        file.name || `avatar-${Date.now()}.jpg`,
+        {
+          type: file.type,
+          lastModified: file.lastModified,
+        },
+      );
+
+      if (avatarPreview) {
+        URL.revokeObjectURL(avatarPreview);
+      }
+
+      const previewUrl = URL.createObjectURL(stableFile);
+
+      setAvatarPreview(previewUrl);
+      setSelectedAvatar(stableFile);
+    } catch (error) {
+      console.error("Failed to read avatar:", error);
+
+      setSelectedAvatar(null);
+      event.target.value = "";
+
+      toast.error(
+        "Не вдалося прочитати фото. Оберіть його ще раз або спробуйте вибрати через «Файли».",
+      );
+    }
   };
   const handleSaveProfile = async (formData: FormData) => {
     const username = formData.get("username")?.toString().trim() ?? "";
@@ -124,7 +150,7 @@ const ProfileEdit = () => {
                 defaultValue={user.username}
                 required
                 minLength={2}
-  maxLength={50}
+                maxLength={50}
                 className={css.input}
               />
             </div>
