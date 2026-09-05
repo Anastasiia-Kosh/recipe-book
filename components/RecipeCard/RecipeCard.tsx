@@ -17,7 +17,12 @@ export default function RecipeCard({
   refreshAfterChange = false,
 }: RecipeCardProps) {
   return (
-    <article className={css.card}>
+ <article className={css.card}>
+    <Link
+      href={`/recipes/${recipe._id}`}
+      className={css.cardLink}
+      aria-label={`Переглянути рецепт: ${recipe.title}`}
+    >
       <div className={css.photoWrapper}>
         <Image
           src={recipe.image}
@@ -28,13 +33,6 @@ export default function RecipeCard({
           sizes="(min-width: 1440px) 420px, (min-width: 768px) calc(50vw - 44px), calc(100vw - 40px)"
         />
 
-        <div className={css.bookmarkWrapper}>
-          <SaveRecipeButton
-            recipeId={recipe._id}
-            initialSaved={initialSaved}
-            refreshAfterChange={refreshAfterChange}
-          />
-        </div>
         <p className={css.category}>{recipe.category}</p>
       </div>
 
@@ -43,11 +41,20 @@ export default function RecipeCard({
 
         <p className={css.description}>{recipe.shortDescription}</p>
 
-        <Link href={`/recipes/${recipe._id}`} className={css.detailsLink}>
+        <span className={css.detailsLink}>
           Переглянути рецепт
           <Icon name="arrow-right" size={18} />
-        </Link>
+        </span>
       </div>
-    </article>
+    </Link>
+
+    <div className={css.bookmarkWrapper}>
+      <SaveRecipeButton
+        recipeId={recipe._id}
+        initialSaved={initialSaved}
+        refreshAfterChange={refreshAfterChange}
+      />
+    </div>
+  </article>
   );
 }

@@ -1,7 +1,13 @@
 .card {
+  position: relative;
+  height: 100%;
+}
+
+.cardLink {
   display: flex;
   flex-direction: column;
   height: 100%;
+  color: inherit;
 }
 
 .photoWrapper {
@@ -146,12 +152,13 @@
 }
 
 /* whole card hover */
-
-.card:hover .photo {
+.cardLink:hover .photo,
+.cardLink:focus-visible .photo {
   transform: scale(1.025);
 }
 
-.card:hover .title {
+.cardLink:hover .title,
+.cardLink:focus-visible .title {
   color: var(--color-accent);
 }
 
