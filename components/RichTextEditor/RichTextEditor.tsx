@@ -17,7 +17,13 @@ export default function RichTextEditor({
   const [content, setContent] = useState(initialContent);
 
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [
+      StarterKit.configure({
+        link: {
+          openOnClick: false,
+        },
+      }),
+    ],
 
     content: initialContent,
 
@@ -39,12 +45,37 @@ export default function RichTextEditor({
       isHeading3: editor?.isActive("heading", { level: 3 }) ?? false,
       isBulletList: editor?.isActive("bulletList") ?? false,
       isOrderedList: editor?.isActive("orderedList") ?? false,
-
+      isLink: editor?.isActive("link") ?? false,
+      hasSelection: editor ? !editor.state.selection.empty : false,
       canUndo: editor?.can().chain().focus().undo().run() ?? false,
       canRedo: editor?.can().chain().focus().redo().run() ?? false,
     }),
   });
+  const handleLink = () => {
+    if (!editor) {
+      return;
+    }
 
+    const currentUrl = editor.getAttributes("link").href as string | undefined;
+
+    const url = window.prompt(
+      "Вставте адресу посилання",
+      currentUrl ?? "https://",
+    );
+
+    if (url === null) {
+      return;
+    }
+
+    const href = url.trim();
+
+    if (!href) {
+      editor.chain().focus().extendMarkRange("link").unsetLink().run();
+      return;
+    }
+
+    editor.chain().focus().extendMarkRange("link").setLink({ href }).run();
+  };
   return (
     <div className={css.wrapper}>
       <div className={css.toolbar}>
@@ -88,6 +119,19 @@ export default function RichTextEditor({
 
         <button
           type="button"
+          title="Додати або змінити посилання"
+          aria-label="Додати або змінити посилання"
+          className={editorState?.isLink ? css.active : ""}
+          disabled={!editorState?.hasSelection && !editorState?.isLink}
+          onClick={handleLink}
+        >
+          🔗
+        </button>
+
+        <span className={css.divider} />
+
+        <button
+          type="button"
           title="Підзаголовок"
           className={editorState?.isHeading3 ? css.active : ""}
           onClick={() =>
@@ -103,9 +147,7 @@ export default function RichTextEditor({
           type="button"
           title="Маркерований список"
           className={editorState?.isBulletList ? css.active : ""}
-          onClick={() =>
-            editor?.chain().focus().toggleBulletList().run()
-          }
+          onClick={() => editor?.chain().focus().toggleBulletList().run()}
         >
           • List
         </button>
@@ -114,9 +156,7 @@ export default function RichTextEditor({
           type="button"
           title="Нумерований список"
           className={editorState?.isOrderedList ? css.active : ""}
-          onClick={() =>
-            editor?.chain().focus().toggleOrderedList().run()
-          }
+          onClick={() => editor?.chain().focus().toggleOrderedList().run()}
         >
           1. List
         </button>
@@ -142,16 +182,9 @@ export default function RichTextEditor({
         </button>
       </div>
 
-      <EditorContent
-        editor={editor}
-        className={css.editor}
-      />
+      <EditorContent editor={editor} className={css.editor} />
 
-      <input
-        type="hidden"
-        name={name}
-        value={content}
-      />
+      <input type="hidden" name={name} value={content} />
     </div>
   );
 }

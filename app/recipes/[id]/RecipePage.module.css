@@ -84,6 +84,17 @@
   line-height: 1.15;
   color: var(--color-text);
 }
+.recipeText a {
+  color: var(--color-accent);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.recipeText a:hover {
+  text-decoration-thickness: 2px;
+}
 .recipeText p {
   margin-bottom: 12px;
 }
