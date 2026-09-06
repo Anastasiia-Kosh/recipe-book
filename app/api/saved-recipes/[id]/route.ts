@@ -1,24 +1,25 @@
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { api } from "../../api";
 import { isAxiosError } from "axios";
+import { requestWithAuthRefresh } from "@/app/api/_utils/requestWithAuthRefresh";
 
 export async function POST(
   _request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const cookieStore = await cookies();
     const { id } = await params;
 
-    const res = await api.post(
-      `/saved-recipes/${id}`,
-      {},
-      {
-        headers: {
-          Cookie: cookieStore.toString(),
+    const res = await requestWithAuthRefresh((cookieHeader) =>
+      api.post(
+        `/saved-recipes/${id}`,
+        {},
+        {
+          headers: {
+            Cookie: cookieHeader,
+          },
         },
-      },
+      ),
     );
 
     return NextResponse.json(res.data, {
@@ -49,16 +50,14 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const cookieStore = await cookies();
     const { id } = await params;
 
-    const res = await api.delete(
-      `/saved-recipes/${id}`,
-      {
+    const res = await requestWithAuthRefresh((cookieHeader) =>
+      api.delete(`/saved-recipes/${id}`, {
         headers: {
-          Cookie: cookieStore.toString(),
+          Cookie: cookieHeader,
         },
-      },
+      }),
     );
 
     return NextResponse.json(res.data, {

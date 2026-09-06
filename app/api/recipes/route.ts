@@ -1,27 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import { isAxiosError } from "axios";
 import { api } from "../api";
+import { requestWithAuthRefresh } from "@/app/api/_utils/requestWithAuthRefresh";
 
 export async function POST(request: NextRequest) {
   try {
-    const cookieStore = await cookies();
     const formData = await request.formData();
 
-    const response = await api.post(
-      "/recipes",
-      formData,
-      {
+    const response = await requestWithAuthRefresh((cookieHeader) =>
+      api.post("/recipes", formData, {
         headers: {
-          Cookie: cookieStore.toString(),
+          Cookie: cookieHeader,
         },
-      },
+      }),
     );
 
-    return NextResponse.json(
-      response.data,
-      { status: response.status },
-    );
+    return NextResponse.json(response.data, {
+      status: response.status,
+    });
   } catch (error) {
     if (isAxiosError(error)) {
       return NextResponse.json(

@@ -78,10 +78,11 @@ const ProfileEdit = () => {
         avatarFormData.append("avatar", selectedAvatar);
       }
 
-      const [updatedUser, avatarResult] = await Promise.all([
-        updateMe({ username }),
-        selectedAvatar ? updateAvatar(avatarFormData) : Promise.resolve(null),
-      ]);
+      const updatedUser = await updateMe({ username });
+
+      const avatarResult = selectedAvatar
+        ? await updateAvatar(avatarFormData)
+        : null;
 
       setUser({
         ...updatedUser,
