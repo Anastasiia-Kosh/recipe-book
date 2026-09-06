@@ -1,6 +1,6 @@
 .hero {
   min-height: 760px;
-  background-image: url("/images/home/hero-mobile.png");
+  background-image: url("/images/home/hero-mobile.webp");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -78,7 +78,7 @@
 @media screen and (min-width: 768px) {
   .hero {
     min-height: 680px;
-    background-image: url("/images/home/hero-tablet.png");
+    background-image: url("/images/home/hero-tablet.webp");
   }
 
   .heroContent {
@@ -106,7 +106,7 @@
 @media screen and (min-width: 1440px) {
   .hero {
     min-height: 720px;
-    background-image: url("/images/home/hero-desktop.png");
+    background-image: url("/images/home/hero-desktop.webp");
   }
 
   .heroContainer {
