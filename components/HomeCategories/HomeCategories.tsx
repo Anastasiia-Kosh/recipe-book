@@ -59,42 +59,44 @@ export default async function HomeCategories() {
           </div>
 
           <Link href="/recipes" className={css.link}>
-            Усі категорії<Icon name="arrow-right" size={22} />
+            Усі категорії
+            <Icon name="arrow-right" size={22} />
           </Link>
         </div>
 
         <ul className={css.categoryGrid}>
-   {homeCategories.map((category, index) => {
-  const count =
-    categoryCounts.find(
-      (categoryCount) => categoryCount.category === category.title,
-    )?.count ?? 0;
+          {homeCategories.map((category, index) => {
+            const count =
+              categoryCounts.find(
+                (categoryCount) => categoryCount.category === category.title,
+              )?.count ?? 0;
 
-  return (
-    <li key={category.title}>
-      <Link
-        href={`/recipes?category=${encodeURIComponent(category.title)}`}
-        className={css.categoryCard}
-      >
-        <div className={css.categoryImage}>
-          <Image
-            src={category.image}
-            alt={category.title}
-            fill
-            loading={index === 0 ? "eager" : "lazy"}
-            sizes="(min-width: 1440px) 400px, (min-width: 768px) 50vw, 100vw"
-          />
-        </div>
+            return (
+              <li key={category.title}>
+                <Link
+                  href={`/recipes?category=${encodeURIComponent(category.title)}`}
+                  className={css.categoryCard}
+                >
+                  <div className={css.categoryImage}>
+                    <Image
+                      src={category.image}
+                      alt={category.title}
+                      fill
+                      sizes="(min-width: 1440px) 400px, (min-width: 768px) 50vw, 100vw"
+                    />
+                  </div>
 
-        <div className={css.categoryInfo}>
-            <h3>{category.title}</h3>
-            <p className={css.recipeCount}>{count} {getRecipeWord(count)}</p>
-          <Icon name="arrow-right" size={22} />
-        </div>
-      </Link>
-    </li>
-  );
-})}
+                  <div className={css.categoryInfo}>
+                    <h3>{category.title}</h3>
+                    <p className={css.recipeCount}>
+                      {count} {getRecipeWord(count)}
+                    </p>
+                    <Icon name="arrow-right" size={22} />
+                  </div>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </section>
