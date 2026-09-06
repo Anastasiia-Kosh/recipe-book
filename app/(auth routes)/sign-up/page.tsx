@@ -77,7 +77,7 @@ const SignUp = () => {
             </div>
 
             {error && <p className={css.error}>{error}</p>}
-            
+
             <SubmitButton pendingText="Реєструємо..." fullWidth>
               Зареєструватися
             </SubmitButton>
@@ -93,7 +93,6 @@ const SignUp = () => {
                 src="/images/auth/sing-up2.png"
                 alt=""
                 fill
-                loading="eager"
                 className={css.image}
                 sizes="(min-width: 768px) 40vw, 80vw"
               />
