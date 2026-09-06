@@ -5,22 +5,7 @@ import css from "./RecipesPage.module.css";
 import Pagination from "@/components/Pagination/Pagination";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import type { Metadata } from "next";
-
-const categories = [
-  "Macarons",
-  "Млинці",
-  "Варення",
-  "Десерти",
-  "Кекси",
-  "Торти",
-  "Тарти",
-  "Пироги",
-  "Печиво",
-  "Рогалики",
-  "Інше",
-  "Основні страви",
-  "Перші страви",
-];
+import { recipeCategories } from "@/types/recipe";
 
 interface RecipesPageProps {
   searchParams: Promise<{
@@ -142,7 +127,7 @@ export default async function RecipesPage(props: RecipesPageProps) {
               Усі категорії
             </Link>
           </li>
-          {categories.map((item) => (
+          {recipeCategories.map((item) => (
             <li key={item}>
               <Link
                 href={`/recipes?category=${encodeURIComponent(item)}`}
