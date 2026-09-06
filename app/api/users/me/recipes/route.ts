@@ -6,15 +6,18 @@ import { isAxiosError } from "axios";
 import { api } from "@/app/api/api";
 import { logErrorResponse } from "@/app/api/_utils/utils";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const queryString = new URL(request.url).searchParams.toString();
+    
     const res = await requestWithAuthRefresh((cookieHeader) =>
-      api.get("/users/me/recipes", {
+      api.get(`/users/me/recipes${queryString ? `?${queryString}` : ""}`, {
         headers: {
           Cookie: cookieHeader,
         },
       }),
     );
+    
     return NextResponse.json(res.data, { status: res.status });
   } catch (error) {
     if (isAxiosError(error)) {

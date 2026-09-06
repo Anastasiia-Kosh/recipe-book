@@ -102,7 +102,9 @@ export const removeSavedRecipe = async (
 };
 
 export const getSavedRecipes = async (): Promise<SavedRecipe[]> => {
-  const { data } = await nextServerInstance.get<SavedRecipe[]>("/saved-recipes");
+  const { data } = await nextServerInstance.get<{
+    savedRecipes: SavedRecipe[];
+  }>("/saved-recipes?all=true");
 
-  return data;
+  return data.savedRecipes;
 };

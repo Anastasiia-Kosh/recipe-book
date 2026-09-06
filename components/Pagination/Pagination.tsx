@@ -2,7 +2,7 @@
 
 import ReactPaginate from "react-paginate";
 import css from "./Pagination.module.css";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Icon from "../Icon/Icon";
 
 interface PaginationProps {
@@ -16,6 +16,7 @@ export default function Pagination({
 }: PaginationProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const pathname = usePathname();
 
   if (totalPages <= 1) {
     return null;
@@ -33,7 +34,7 @@ export default function Pagination({
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", nextPage.toString());
 
-    router.push(`/recipes?${params.toString()}`);
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   return (

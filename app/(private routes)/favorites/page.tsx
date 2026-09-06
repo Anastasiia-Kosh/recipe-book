@@ -3,9 +3,21 @@ import { fetchSavedRecipes } from "@/lib/api/serverApi";
 import type { Recipe } from "@/types/recipe";
 import css from "../MyRecipesPage-Favorites.module.css";
 import RecipesEmptyState from "@/components/RecipesEmptyState/RecipesEmptyState";
+import Pagination from "@/components/Pagination/Pagination";
 
-export default async function FavoritesPage() {
-  const savedRecipes = await fetchSavedRecipes();
+interface FavoritesPageProps {
+  searchParams: Promise<{
+    page?: string;
+  }>;
+}
+
+export default async function FavoritesPage({
+  searchParams,
+}: FavoritesPageProps) {
+  const params = await searchParams;
+  const currentPage = Math.max(1, Number(params.page) || 1);
+
+  const { savedRecipes, totalPages } = await fetchSavedRecipes(currentPage);
 
   const favoriteRecipes = savedRecipes
     .map((savedRecipe) => savedRecipe.recipeId)
@@ -20,11 +32,14 @@ export default async function FavoritesPage() {
         <h1 className={css.title}>Обрані рецепти</h1>
 
         {favoriteRecipes.length > 0 ? (
-          <RecipeList
-            recipes={favoriteRecipes}
-            initialSavedRecipes={savedRecipes}
-            refreshAfterChange
-          />
+          <>
+            <RecipeList
+              recipes={favoriteRecipes}
+              initialSavedRecipes={savedRecipes}
+              refreshAfterChange
+            />
+            <Pagination totalPages={totalPages} currentPage={currentPage} />
+          </>
         ) : (
           <RecipesEmptyState
             image="/images/empty-states/favorites.png"

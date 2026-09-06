@@ -10,7 +10,7 @@ export interface ServerSession {
 }
 export const checkSession = async () => {
   const cookiesData = await cookies();
-    const res = await axios.post(
+  const res = await axios.post(
     `${process.env.BACKEND_URL}/auth/refresh`,
     null,
     {
@@ -37,6 +37,13 @@ export interface FetchRecipesResponse {
   totalRecipes: number;
   totalPages: number;
 }
+export interface FetchSavedRecipesResponse {
+  savedRecipes: SavedRecipe[];
+  page: number;
+  perPage: number;
+  totalSavedRecipes: number;
+  totalPages: number;
+}
 export interface FetchRecipesParams {
   category?: string;
   search?: string;
@@ -44,19 +51,19 @@ export interface FetchRecipesParams {
   perPage?: number;
 }
 export const fetchRecipes = async (
-  filters: FetchRecipesParams ={},
+  filters: FetchRecipesParams = {},
 ): Promise<FetchRecipesResponse> => {
   const params = new URLSearchParams();
   if (filters.category) {
     params.set("category", filters.category);
   }
-    if (filters.search) {
+  if (filters.search) {
     params.set("search", filters.search);
   }
-      if (filters.page) {
+  if (filters.page) {
     params.set("page", filters.page.toString());
   }
-        if (filters.perPage) {
+  if (filters.perPage) {
     params.set("perPage", filters.perPage.toString());
   }
   const queryString = params.toString();
@@ -93,10 +100,12 @@ export const fetchRecipeById = async (id: string): Promise<Recipe | null> => {
   return response.json();
 };
 
-export const fetchMyRecipes = async (): Promise<FetchRecipesResponse> => {
+export const fetchMyRecipes = async (
+  page = 1,
+): Promise<FetchRecipesResponse> => {
   const cookiesData = await cookies();
   const { data } = await nextServerInstance.get<FetchRecipesResponse>(
-    `/users/me/recipes`,
+    `/users/me/recipes?page=${page}`,
     {
       headers: { Cookie: cookiesData.toString() },
     },
@@ -104,11 +113,14 @@ export const fetchMyRecipes = async (): Promise<FetchRecipesResponse> => {
 
   return data;
 };
-export const fetchSavedRecipes = async (): Promise<SavedRecipe[]> => {
+
+export const fetchSavedRecipes = async (
+  page = 1,
+): Promise<FetchSavedRecipesResponse> => {
   const cookieStore = await cookies();
 
-  const { data } = await nextServerInstance.get<SavedRecipe[]>(
-    "/saved-recipes",
+  const { data } = await nextServerInstance.get<FetchSavedRecipesResponse>(
+    `/saved-recipes?page=${page}`,
     {
       headers: {
         Cookie: cookieStore.toString(),

@@ -4,10 +4,12 @@ import { api } from "../api";
 import { isAxiosError } from "axios";
 import { logErrorResponse } from "../_utils/utils";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const queryString = new URL(request.url).searchParams.toString();
+
     const res = await requestWithAuthRefresh((cookieHeader) =>
-      api.get("/saved-recipes", {
+      api.get(`/saved-recipes${queryString ? `?${queryString}` : ""}`, {
         headers: {
           Cookie: cookieHeader,
         },
