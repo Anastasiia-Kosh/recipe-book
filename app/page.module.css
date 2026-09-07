@@ -1,17 +1,22 @@
 .hero {
+  position: relative;
   min-height: 760px;
-  background-image: url("/images/home/hero-mobile.webp");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  overflow: hidden;
+}
+
+.heroPicture {
+  position: absolute;
+  inset: 0;
 }
 
 .heroBackground {
   object-fit: cover;
-  object-position: 68% center;
+  object-position: center;
 }
-
 .heroContainer {
+  position: relative;
+  z-index: 1;
+
   display: flex;
   align-items: flex-start;
   min-height: 760px;
@@ -78,7 +83,6 @@
 @media screen and (min-width: 768px) {
   .hero {
     min-height: 680px;
-    background-image: url("/images/home/hero-tablet.webp");
   }
 
   .heroContent {
@@ -106,7 +110,6 @@
 @media screen and (min-width: 1440px) {
   .hero {
     min-height: 720px;
-    background-image: url("/images/home/hero-desktop.webp");
   }
 
   .heroContainer {

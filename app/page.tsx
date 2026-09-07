@@ -3,6 +3,7 @@ import css from "./page.module.css";
 import HomeCategories from "@/components/HomeCategories/HomeCategories";
 import HomeLatestRecipes from "@/components/HomeLatestRecipes/HomeLatestRecipes";
 import type { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   alternates: {
@@ -29,7 +30,28 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-    <section className={css.hero}>
+      <section className={css.hero}>
+        <picture className={css.heroPicture}>
+  <source
+    media="(min-width: 1440px)"
+    srcSet="/images/home/hero-desktop.webp"
+  />
+
+  <source
+    media="(min-width: 768px)"
+    srcSet="/images/home/hero-tablet.webp"
+  />
+
+  <Image
+    src="/images/home/hero-mobile.webp"
+    alt=""
+    fill
+    sizes="100vw"
+    className={css.heroBackground}
+    loading="eager"
+    fetchPriority="high"
+  />
+</picture>
   <div className={`container ${css.heroContainer}`}>
     <div className={css.heroText}>
       <h1 className={css.title}>
