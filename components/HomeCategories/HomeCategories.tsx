@@ -7,27 +7,27 @@ import Icon from "../Icon/Icon";
 const homeCategories = [
   {
     title: "Торти",
-    image: "/images/categories/cakes.png",
+    image: "/images/categories/cakes.webp",
   },
   {
     title: "Кекси",
-    image: "/images/categories/cupcakes.png",
+    image: "/images/categories/cupcakes.webp",
   },
   {
     title: "Печиво",
-    image: "/images/categories/cookies.png",
+    image: "/images/categories/cookies.webp",
   },
   {
     title: "Пироги",
-    image: "/images/categories/pies.png",
+    image: "/images/categories/pies.webp",
   },
   {
     title: "Десерти",
-    image: "/images/categories/desserts.png",
+    image: "/images/categories/desserts.webp",
   },
   {
     title: "Macarons",
-    image: "/images/categories/macarons.png",
+    image: "/images/categories/macarons.webp",
   },
 ];
 function getRecipeWord(count: number) {
